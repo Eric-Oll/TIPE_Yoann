@@ -16,6 +16,8 @@ import random as rd
 
 from road import Road
 from vehicule import Vehicule
+from landscape import create_landscape
+
 # Paramètres de simulation
 #-------------------------
 NB_VEHICULE = 20        # Nombre de véhicule dans la simulation
@@ -98,101 +100,33 @@ roadmap = [path1, path2, path3]
 #traffic = [toto_car, yoyo_car] # Liste de vehicule
 traffic = [Vehicule(roads=roadmap[rd.randint(0,len(roadmap)-1)]) for x in range(NB_VEHICULE)]
 
-#t = np.linspace(-np.pi/2, n*np.pi/2, (n+1)*100) # Paramètres pour la position de la voiture
-                                                # (n+1)*100 -> pour avoir vitesse constante du point
-#x = rtraj*np.cos(t)                             # Abscisses de la voiture dans le rond-point
-#y = rtraj*np.sin(t)                             # Ordonnées de la voiture dans le rond-point
-
-#if n==0:                                        # Coordonnées de la voiture en sortie 1
-#    xsortie1 = np.linspace(rtraj, 42, 100)
-#    ysortie1 = np.linspace(0,0,100)
-#    x = np.concatenate((x,xsortie1), axis = 0)
-#    y = np.concatenate((y,ysortie1), axis = 0)
-#elif n==1:                                      # Coordonnées de la voiture en sortie 2
-#    xsortie2 = np.linspace(0, 0, 100)
-#    ysortie2 = np.linspace(rtraj,42,100)
-#    x = np.concatenate((x,xsortie2), axis = 0)
-#    y = np.concatenate((y,ysortie2), axis = 0)
-#else:                                           # Coordonnées de la voiture en sortie 3
-#    xsortie3 = np.linspace(-rtraj, -42, 100)
-#    ysortie3 = np.linspace(0,0,100)
-#    x = np.concatenate((x,xsortie3), axis = 0)
-#    y = np.concatenate((y,ysortie3), axis = 0)
-
-r = np.sqrt(63*r2**2/64)                    # Constante choisie pour tronquer le cercle extérieur
 
 # 1.2 - Création de la figure et du rond-point
-
 # a) Création de la figure et paramétrages
-
 fig, ax = plt.subplots()
 ax.margins(0,0)
+plt.axis("equal")
 x_min, x_max, y_min, y_max = ax.axis('tight')
 x_min, x_max, y_min, y_max = -39, 39, -29, 29
 ax.set(xlim=(x_min, x_max), ylim=(y_min, y_max))
 
-# b) Création du rond-point
+create_landscape(
+    ax,                         # Zone grapgique
+    r1,                         # Rayon interieur
+    r2,                         # Rayon extérieur
+    r = np.sqrt(63*r2**2/64)    # Constante choisie pour tronquer le cercle extérieur
+    )
 
-def f1(x,r): # Création de la partie positive du cercle extérieur, tronqué
-    y=x**2-63*r/64
-    return np.sqrt(np.sqrt(y/abs(y))*(r**2*(np.sqrt((abs(abs(x)-r/8))/(abs(x)-r/8)))-(x**2)))
-
-def f2(x,r): # Création de la partie négative du cercle extérieur, tronqué
-    y=x**2-63*r/64
-    return -np.sqrt(np.sqrt(y/abs(y))*(r**2*(np.sqrt((abs(abs(x)-r/8))/(abs(x)-r/8)))-(x**2)))
-
-# c) Création des routes liées au rond-point
-f3 = lambda x: -r/8
-f4 = lambda x: r/8
-
-# Abscisses
-X1=np.linspace(0,r1,100) # Pour la partie positive du cercle intérieur
-X2=np.linspace(0,-r1,100) # Pour la partie négative du cercle intérieur
-X3 = np.linspace(-r,r,100) # Pour la partie positive du cercle extérieur, tronqué
-X4 = np.linspace(-r,r,100) # Pour la partie négative du cercle extérieur, tronqué
-X5 = np.linspace(-2*r,-r,100) # Pour la route ouest
-X6 = np.linspace(r,2*r,100) # Pour la route est
-
-# Ordonnées
-
-Y1 = [np.sqrt(r1**2-x**2) for x in X1] # Pour la partie positive du cercle intérieur
-Y2 = [-np.sqrt(r1**2-x**2) for x in X2] # Pour la partie négative du cercle intérieur
-Y3 = [f1(x,r2) for x in X3] # Pour la partie positive du cercle extérieur, tronqué
-Y4 = [f2(x,r2) for x in X4] # Pour la partie négative du cercle extérieur, tronqué
-Y5 = [f3(x) for x in X5] # Pour la route ouest
-Y6 = [f4(x) for x in X6] # Pour la route est
-
-# Tracés des courbes dans un même graphe
-
-plt.axis("equal")
-ax.plot(X1,Y1,'b') # Cercle intérieur
-ax.plot(X2,Y1,'b') # Cercle intérieur
-ax.plot(X1,Y2,'b') # Cercle intérieur
-ax.plot(X2,Y2,'b') # Cercle intérieur
-ax.plot(X3,Y3,'b') # Cercle extérieur, tronqué
-ax.plot(X4,Y3,'b') # Cercle extérieur, tronqué
-ax.plot(X3,Y4,'b') # Cercle extérieur, tronqué
-ax.plot(X4,Y4,'b') # Cercle extérieur, tronqué
-ax.plot(X5,Y5,'b') # Route ouest
-ax.plot(X6,Y5,'b') # Route est
-ax.plot(X5,Y6,'b') # Route ouest
-ax.plot(X6,Y6,'b') # Route est
-ax.plot([-r/5, -r/5], [y_min, min(Y4)], 'b') # Route sud
-ax.plot([-r/5, -r/5], [max(Y3), y_max], 'b') # Route nord
-ax.plot([r/5, r/5], [y_min, min(Y4)], 'b') # Route sud
-ax.plot([r/5, r/5], [max(Y3), y_max], 'b') # Route nord
 
 # Création de la ligne qui sera mise à jour au fur et à mesure
-
 line, = ax.plot([],[], color='blue')
 point, = ax.plot([], [], ls="none", marker="o")
-# Gestion des limites de la fenêtre
 
+# Gestion des limites de la fenêtre
 ax.set_xlim([-2, 2])
 ax.set_ylim([-2, 2])
 
 # Création de la fonction qui sera appelée à chaque nouvelle image de l'animation
-
 def animate(k):
     #i = min(k, x.size)
     #line.set_data(x[:i], y[:i]) #pour avoir le chemin parcouru
