@@ -29,7 +29,7 @@ class Vehicule(object):
             self.add_path(roads)
 
     def __repr__(self):
-        return f"<Vehicule {self.name} : position={self.position}(index={self.index}), length={self.length}>"
+        return f"<Vehicule {self.name} : position={self.position}(index={self.index}), speed={self.speed}, length={self.length}>"
 
     @property
     def length(self):

@@ -22,7 +22,7 @@ from scenario import Scenario
 
 # Paramètres de simulation
 #-------------------------
-NB_VEHICULE = 10        # Nombre de véhicule dans la simulation
+NB_VEHICULE = 20        # Nombre de véhicule dans la simulation
 MIN_TIME = 80           # Temps minimum entre les véhicules
 MAX_DEPARTURE = 2000    # Heure maximum pour le départ des véhicules
 
@@ -125,6 +125,7 @@ ax.set_ylim([-2, 2])
 departure_time = [x for x in range(0, MAX_DEPARTURE, MIN_TIME)] # On définit les heures de départ possibles
 for vehicule in traffic: # Pour chaque véhicule on choisit une heure de départ
     vehicule.start(departure_time.pop(rd.randint(0,len(departure_time)-1))) #... au hasard et jamais la même heure
+    vehicule.speed = [5,4, 3][rd.randint(0,2)]
 
 # Création du scénrio
 movie = Scenario(traffic)
