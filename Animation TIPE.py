@@ -6,7 +6,11 @@ CONSEILS :
  + créer une fonction pour la création du fond de carte
 > Donner des noms de variable explicites qui auto-documente le code
 """
+import logging
 
+from scenario import Scenario
+
+logging.basicConfig(level=logging.DEBUG)
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation
@@ -124,12 +128,13 @@ ax.set_ylim([-2, 2])
 
 # Création de la fonction qui sera appelée à chaque nouvelle image de l'animation
 def animate(k):
-    #i = min(k, x.size)
-    #line.set_data(x[:i], y[:i]) #pour avoir le chemin parcouru
-    #point.set_data([x[i], x[max(0,i-10)]], [y[i], y[max(0,i-10)]])
-    positions_list = [x.get_position(k) for x in traffic]
-    point.set_data([x for x,y in positions_list], [y for x,y in positions_list])
-    return line, point
+    logging.debug(f"Frame {k}")
+
+
+    #positions_list = [x.get_position(k) for x in traffic]
+    #point.set_data([x for x,y in positions_list], [y for x,y in positions_list])
+    point.set_data(*movie.get_data(k))
+    return point,
 
 # Génération de l'animation
 departure_time = [x for x in range(0, MAX_DEPARTURE, MIN_TIME)] # On définit les heures de départ possibles
@@ -138,7 +143,15 @@ for vehicule in traffic: # Pour chaque véhicule on choisit une heure de départ
 #toto_car.start(0)
 #yoyo_car.start(10)
 
-ani = animation.FuncAnimation(fig=fig, func=animate, frames=range(max(vehicule.travel_time for vehicule in traffic)), interval=20, blit=True, repeat = False)
+# Création du scénrio
+movie = Scenario(traffic)
+
+ani = animation.FuncAnimation(fig=fig,
+                              func=animate,
+                              frames=len(movie),
+                              interval=20,
+                              blit=True,
+                              repeat = False)
 #ani = animation.FuncAnimation(fig=fig, func=animate, frames=range(x.size), interval=20, blit=True, repeat = True)
 
 plt.axis("equal")
