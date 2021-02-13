@@ -14,6 +14,8 @@ from matplotlib import animation
 from scipy.integrate import odeint
 import random as rd
 
+from road import Road
+from vehicule import Vehicule
 # Paramètres de simulation
 #-------------------------
 NB_VEHICULE = 20        # Nombre de véhicule dans la simulation
@@ -22,75 +24,8 @@ MAX_DEPARTURE = 2000    # Heure maximum pour le départ des véhicules
 
 # Définition des classes Road et Vehicule
 # ---------------------------------------
-class Road(object):
-    """
-    Définit la fonction de calcul de la trajectoire entre deux positions.
-    """
-
-    def __init__(self, x_interval, y_interval, path_functions, step=100):
-        """
-        x_interval : Interval de calcul (x_start, x_end)
-        y_interval : Interval de calcul (y_start, y_end)
-        path_functions : fonctions paramétriques (x_func, y_func)
-            de calcul de la trajectoire entre les deux positions
-        """
-        self.x_interval = x_interval
-        self.y_interval = y_interval
-        self.path_functions = path_functions
-        self.step = step
-        self.setup_path()
-
-    def setup_path(self):
-        """
-        Calcul les Coordonnées de la routes
-        """
-        self.path = [(x,y) \
-            for x, y in zip(
-                self.path_functions[0](np.linspace(*self.x_interval, self.step)),
-                self.path_functions[1](np.linspace(*self.y_interval, self.step))
-                )]
 
 
-class Vehicule(object):
-    """
-    Regroupe les routes  de son itinairaire
-    et définit la position du véhicule dans le temps
-    """
-
-    def __init__(self, roads=None):
-        self.init_time = 0
-        self.path = [] # Liste des routes à prendre par le Vehicule
-        if roads is not None:
-            self.add_path(roads)
-
-    @property
-    def length(self):
-        return len(self.path)
-
-    @property
-    def travel_time(self):
-        return self.init_time + self.length
-
-    def add_path(self, roads:list):
-        """
-        Ajoute une route à l'itinairaire
-        """
-        for road in roads:
-            self.path.extend(road.path)
-
-    def start(self, init_time):
-        """
-        Définit le moment du départ
-        => permet un décalage dans la lecture des positions
-        """
-        self.init_time = init_time
-
-    def get_position(self, current_time):
-        """
-        Retourne la position (x,y) du Vehicule
-        """
-        real_time = current_time-self.init_time
-        return (None, None) if real_time<0 or real_time>= len(self.path) else self.path[real_time]
 
 
 ### Un seul tour
