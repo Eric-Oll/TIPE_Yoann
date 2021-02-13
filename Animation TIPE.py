@@ -7,7 +7,6 @@ CONSEILS :
 > Donner des noms de variable explicites qui auto-documente le code
 """
 
-
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation
@@ -18,16 +17,12 @@ from road import Road
 from vehicule import Vehicule
 from landscape import create_landscape
 
+
 # Paramètres de simulation
 #-------------------------
 NB_VEHICULE = 20        # Nombre de véhicule dans la simulation
 MIN_TIME = 30           # Temps minimum entre les véhicules
 MAX_DEPARTURE = 2000    # Heure maximum pour le départ des véhicules
-
-# Définition des classes Road et Vehicule
-# ---------------------------------------
-
-
 
 
 ### Un seul tour
@@ -105,11 +100,12 @@ traffic = [Vehicule(roads=roadmap[rd.randint(0,len(roadmap)-1)]) for x in range(
 # a) Création de la figure et paramétrages
 fig, ax = plt.subplots()
 ax.margins(0,0)
-plt.axis("equal")
+
 x_min, x_max, y_min, y_max = ax.axis('tight')
 x_min, x_max, y_min, y_max = -39, 39, -29, 29
 ax.set(xlim=(x_min, x_max), ylim=(y_min, y_max))
 
+# Création du fond de carte
 create_landscape(
     ax,                         # Zone grapgique
     r1,                         # Rayon interieur
@@ -146,4 +142,5 @@ ani = animation.FuncAnimation(fig=fig, func=animate, frames=range(max(vehicule.t
 #ani = animation.FuncAnimation(fig=fig, func=animate, frames=range(x.size), interval=20, blit=True, repeat = True)
 
 plt.axis("equal")
+
 plt.show()
