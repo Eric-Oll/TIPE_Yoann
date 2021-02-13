@@ -3,6 +3,7 @@ Ce module contient
 - class Scenario => permet de calculer par anticipation la position des véhicules
 
 """
+import logging
 
 MAX_FRAMES = 10000   # Nombre maximum d'étape du scénario
 
@@ -32,6 +33,7 @@ class Scenario:
         """
         num_frame = 0
         while not all([vehicule.is_ended for vehicule in self._traffic]) and num_frame < MAX_FRAMES:
+            logging.debug(f"""Frame #{num_frame} : {[f"{x.is_started}({x.index})" for x in self._traffic]}""")
             self.add_frame([x.get_position(num_frame) for x in self._traffic])
             num_frame +=1
 

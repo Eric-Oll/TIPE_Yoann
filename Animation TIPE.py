@@ -8,7 +8,7 @@ CONSEILS :
 """
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG, filename='./trace.log')
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation
@@ -22,8 +22,8 @@ from scenario import Scenario
 
 # Paramètres de simulation
 #-------------------------
-NB_VEHICULE = 20        # Nombre de véhicule dans la simulation
-MIN_TIME = 30           # Temps minimum entre les véhicules
+NB_VEHICULE = 10        # Nombre de véhicule dans la simulation
+MIN_TIME = 80           # Temps minimum entre les véhicules
 MAX_DEPARTURE = 2000    # Heure maximum pour le départ des véhicules
 
 
@@ -51,21 +51,18 @@ section0 = Road(
     x_interval=(-np.pi/2,0),
     y_interval=(-np.pi/2,0),
     path_functions=(lambda t: rtraj*np.cos(t), lambda t:  rtraj*np.sin(t)),
-    step=100
     )
 
 section1 = Road(
     x_interval=(0,np.pi/2),
     y_interval=(0,np.pi/2),
     path_functions=(lambda t: rtraj*np.cos(t), lambda t:  rtraj*np.sin(t)),
-    step=100
     )
 
 section2 = Road(
     x_interval=(np.pi/2,2*np.pi/2),
     y_interval=(np.pi/2,2*np.pi/2),
     path_functions=(lambda t: rtraj*np.cos(t), lambda t:  rtraj*np.sin(t)),
-    step=100
     )
 
 sortie0 = Road(
@@ -124,12 +121,7 @@ point, = ax.plot([], [], ls="none", marker="o")
 ax.set_xlim([-2, 2])
 ax.set_ylim([-2, 2])
 
-# Création de la fonction qui sera appelée à chaque nouvelle image de l'animation
-def animate(k):
-    point.set_data(*movie.get_data(k))
-    return point,
-
-# Génération de l'animation
+# Définition de l'heure de départ des véhicules
 departure_time = [x for x in range(0, MAX_DEPARTURE, MIN_TIME)] # On définit les heures de départ possibles
 for vehicule in traffic: # Pour chaque véhicule on choisit une heure de départ
     vehicule.start(departure_time.pop(rd.randint(0,len(departure_time)-1))) #... au hasard et jamais la même heure
@@ -137,6 +129,15 @@ for vehicule in traffic: # Pour chaque véhicule on choisit une heure de départ
 # Création du scénrio
 movie = Scenario(traffic)
 
+
+# Création de la fonction qui sera appelée à chaque nouvelle image de l'animation
+def animate(k):
+    coordonate = movie.get_data(k)
+    logging.debug(f"Frame#{k} : {coordonate}")
+    point.set_data(*coordonate)
+    return point,
+
+# Lancement de l'animation
 ani = animation.FuncAnimation(fig=fig,
                               func=animate,
                               frames=len(movie),

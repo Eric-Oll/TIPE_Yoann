@@ -11,7 +11,7 @@ class Road(object):
     Définit la fonction de calcul de la trajectoire entre deux positions.
     """
 
-    def __init__(self, x_interval, y_interval, path_functions, step=100):
+    def __init__(self, x_interval, y_interval, path_functions, step=500):
         """
         x_interval : Interval de calcul (x_start, x_end)
         y_interval : Interval de calcul (y_start, y_end)
