@@ -43,6 +43,6 @@ class Scenario:
         :return: ([x0, ...xn], [y0, ..., yn])
         """
         return (
-            [x for x,y in self.frame[num_frame]],
-            [y for x, y in self.frame[num_frame]]
+            [position.x for position in self.frame[num_frame]],
+            [position.y for position in self.frame[num_frame]]
         )

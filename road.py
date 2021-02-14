@@ -5,6 +5,8 @@ Ce module contient les routes permettant au véhicule de se deplacer
 
 """
 import numpy as np
+from position import Position
+
 
 class Road(object):
     """
@@ -28,7 +30,7 @@ class Road(object):
         """
         Calcul les Coordonnées de la routes
         """
-        self.path = [(x,y) \
+        self.path = [Position(x,y) \
             for x, y in zip(
                 self.path_functions[0](np.linspace(*self.x_interval, self.step)),
                 self.path_functions[1](np.linspace(*self.y_interval, self.step))

@@ -3,6 +3,7 @@ Ce module contient la définition de la classe Vehicule
 """
 import logging
 
+from position import Position, NONE_POSITION
 from road_item import RoadItem
 
 
@@ -55,6 +56,10 @@ class Vehicule(RoadItem):
         return self.index >= len(self._path)
 
     @property
+    def is_running(self):
+        return self.is_started and not self.is_ended
+
+    @property
     def index(self):
         return self._current_position_idx
 
@@ -101,4 +106,4 @@ class Vehicule(RoadItem):
         Retourne la position (x,y) du Vehicule
         """
         self.forward(new_time)
-        return (None, None) if not self.is_started or self.is_ended else self.position
+        return NONE_POSITION if not self.is_started or self.is_ended else self.position
