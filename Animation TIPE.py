@@ -8,7 +8,10 @@ CONSEILS :
 """
 import logging
 
-logging.basicConfig(level=logging.DEBUG, filename='./trace.log')
+logging.basicConfig(level=logging.DEBUG,
+                    filename='./trace.log',
+                    filemode='w',
+                    )
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation
@@ -39,30 +42,30 @@ r1, r2 = 15, 20
 
 # b) Coordonnées
 #n = rd.randint(0,2)                         # Sortie aléatoire (avec sortie i pour n == i-1)
-rtraj = (r1+r2)/2                           # Rayon de la trajectoire
+rtraj = (r1 + r2) / 2                           # Rayon de la trajectoire
 
 entree0 = Road(
     x_interval=(0,0),
-    y_interval=(-42, rtraj*np.sin(-np.pi/2)),
+    y_interval=(-42, rtraj * np.sin(-np.pi / 2)),
     path_functions=(lambda t: t, lambda t: t)
     )
 
 section0 = Road(
     x_interval=(-np.pi/2,0),
     y_interval=(-np.pi/2,0),
-    path_functions=(lambda t: rtraj*np.cos(t), lambda t:  rtraj*np.sin(t)),
+    path_functions=(lambda t: rtraj * np.cos(t), lambda t: rtraj * np.sin(t)),
     )
 
 section1 = Road(
     x_interval=(0,np.pi/2),
     y_interval=(0,np.pi/2),
-    path_functions=(lambda t: rtraj*np.cos(t), lambda t:  rtraj*np.sin(t)),
+    path_functions=(lambda t: rtraj * np.cos(t), lambda t: rtraj * np.sin(t)),
     )
 
 section2 = Road(
     x_interval=(np.pi/2,2*np.pi/2),
     y_interval=(np.pi/2,2*np.pi/2),
-    path_functions=(lambda t: rtraj*np.cos(t), lambda t:  rtraj*np.sin(t)),
+    path_functions=(lambda t: rtraj * np.cos(t), lambda t: rtraj * np.sin(t)),
     )
 
 sortie0 = Road(
@@ -73,7 +76,7 @@ sortie0 = Road(
 
 sortie1 = Road(
     x_interval=(0, 0),
-    y_interval=(rtraj,42),
+    y_interval=(rtraj, 42),
     path_functions=(lambda t: t, lambda t: t)
     )
 
@@ -92,7 +95,7 @@ roadmap = [path1, path2, path3]
 #toto_car = Vehicule(roads=[path1, path2, path3][rd.randint(0,2)])
 #yoyo_car = Vehicule(roads=[path1, path2, path3][rd.randint(0,2)])
 #traffic = [toto_car, yoyo_car] # Liste de vehicule
-traffic = [Vehicule(roads=roadmap[rd.randint(0,len(roadmap)-1)]) for x in range(NB_VEHICULE)]
+traffic = [Vehicule(roads=roadmap[rd.randint(0,len(roadmap)-1)], name=f"Vehicule_{x}") for x in range(NB_VEHICULE)]
 
 
 # 1.2 - Création de la figure et du rond-point

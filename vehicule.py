@@ -3,25 +3,27 @@ Ce module contient la définition de la classe Vehicule
 """
 import logging
 
+from road_item import RoadItem
 
-class Vehicule(object):
+
+class Vehicule(RoadItem):
     """
     Regroupe les routes  de son itinairaire
     et définit la position du véhicule dans le temps
     """
     MAX_SPEED = 5
-    COUNTER = 0
 
     @classmethod
-    def get_id(cls):
-        cls.COUNTER += 1
-        return cls.COUNTER
+    def List_vehicules(cls):
+        """
+        Retourne la liste des véhicules
+        """
+        return [vehicule for vehicule in cls.Get_Items if isinstance(vehicule, Vehicule)]
 
     def __init__(self, roads=None, name=None):
-        self.name=name if name is not None else f"Vehicule{self.get_id()}"
+        super(Vehicule, self).__init__(name=name)
         self._init_time = 0
         self._current_speed = self.MAX_SPEED # On démarre avec la vitesse maximale
-        self._current_time = 0
         self._current_position_idx = 0
 
         self._path = [] # Liste des routes à prendre par le Vehicule
@@ -61,14 +63,6 @@ class Vehicule(object):
         self._current_position_idx = value
 
     @property
-    def current_time(self):
-        return self._current_time
-
-    @current_time.setter
-    def current_time(self, real_time):
-        self._current_time = real_time
-
-    @property
     def speed(self):
         return self._current_speed
 
@@ -95,12 +89,12 @@ class Vehicule(object):
     def forward(self, new_time):
         logging.debug(repr(self)+f".forward : ended={self.is_ended}")
         if not self.is_ended:
-            delta_time = new_time - self.current_time
-            logging.debug(f"... delta time = {delta_time}")
-            self.index += delta_time*self.speed
-            self.current_time = new_time
+            # delta_time = new_time - self.current_time
             logging.debug(f"... new time = {new_time}")
             logging.debug(f"... current time = {self.current_time}")
+            self.current_time = new_time
+            self.index += self.delta_time*self.speed
+            logging.debug(f"... delta time = {self.delta_time}")
 
     def get_position(self, new_time):
         """
