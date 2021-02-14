@@ -5,11 +5,11 @@ import numpy as np
 
 # b) Création du rond-point
 def f1(x,r): # Création de la partie positive du cercle extérieur, tronqué
-    y=x**2-63*r/64
+    y = x**2-63*r/64
     return np.sqrt(np.sqrt(y/abs(y))*(r**2*(np.sqrt((abs(abs(x)-r/8))/(abs(x)-r/8)))-(x**2)))
 
 def f2(x,r): # Création de la partie négative du cercle extérieur, tronqué
-    y=x**2-63*r/64
+    y = x**2-63*r/64
     return -np.sqrt(np.sqrt(y/abs(y))*(r**2*(np.sqrt((abs(abs(x)-r/8))/(abs(x)-r/8)))-(x**2)))
 
 def create_landscape(ax, r1, r2, r):
@@ -28,8 +28,8 @@ def create_landscape(ax, r1, r2, r):
     f4 = lambda x: r/8
 
     # Abscisses
-    X1=np.linspace(0,r1,100) # Pour la partie positive du cercle intérieur
-    X2=np.linspace(0,-r1,100) # Pour la partie négative du cercle intérieur
+    X1 = np.linspace(0,r1,100) # Pour la partie positive du cercle intérieur
+    X2 = np.linspace(0,-r1,100) # Pour la partie négative du cercle intérieur
     X3 = np.linspace(-r,r,100) # Pour la partie positive du cercle extérieur, tronqué
     X4 = np.linspace(-r,r,100) # Pour la partie négative du cercle extérieur, tronqué
     X5 = np.linspace(-2*r,-r,100) # Pour la route ouest
