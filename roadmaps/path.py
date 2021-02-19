@@ -29,7 +29,7 @@ class Path():
         """
         Ajoute une route à l'itinéraire
         """
-        self._path = self._path.extend(road.path)
+        self._path.extend(road.path)
         """
         La méthodede liste "extend(iterable)" ajoute tous les éléments de l'itérable pris individuellement dans la
         liste.

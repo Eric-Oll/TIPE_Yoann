@@ -8,6 +8,7 @@ Versions :
 """
 import logging
 
+from roadmaps.path import Path
 from roadmaps.position import NONE_POSITION
 from road_objects.road_item import RoadItem
 
@@ -26,15 +27,14 @@ class Vehicule(RoadItem):
         """
         return [vehicule for vehicule in cls.Get_Items if isinstance(vehicule, Vehicule)]
 
-    def __init__(self, roads=None, name=None):
+    def __init__(self, path=None, roads=None, name=None):
         super(Vehicule, self).__init__(name=name)
         self._init_time = 0
         self._current_speed = self.MAX_SPEED # On démarre avec la vitesse maximale
         self._current_position_idx = 0
 
-        self._path = [] # Liste des routes à prendre par le Vehicule
-        if roads is not None:
-            self.add_path(roads)
+        self._path = Path() if path is None else path # Itinéraire à prendre par le Vehicule
+
 
     def __repr__(self):
         return f"<Vehicule {self.name} : position={self.position}(index={self.index}), speed={self.speed}, length={self.length}>"
@@ -84,12 +84,18 @@ class Vehicule(RoadItem):
     def category(self):
         return int(self.speed)
 
-    def add_path(self, roads:list):
+    def set_path(self, path:Path):
+        """
+        Affecte un itinéraire au véhicule
+        """
+        self._path = path
+
+    def add_road(self, *road):
         """
         Ajoute une route à l'itinairaire
         """
         for road in roads:
-            self._path.extend(road.path)
+            self._path.add_road(road)
 
     def start(self, init_time):
         """

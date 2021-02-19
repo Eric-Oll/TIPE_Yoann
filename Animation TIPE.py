@@ -22,7 +22,7 @@ logging.basicConfig(level=logging.INFO,
 # Section 1 : Initialisation
 
 # Création de la liste de véhicules
-traffic = [Vehicule(roads=roadmap[rd.randint(0,len(roadmap)-1)]) for x in range(NB_VEHICULE)]
+traffic = [Vehicule(path=roadmap[rd.randint(0,len(roadmap)-1)]) for x in range(NB_VEHICULE)]
 
 
 # 1.2 - Création de la figure et du rond-point

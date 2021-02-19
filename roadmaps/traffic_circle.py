@@ -6,6 +6,7 @@ Carte d'un rond-point
 Création du fond de carte
 """
 import numpy as np
+from roadmaps.path import Path
 from roadmaps.road import Road
 
 
@@ -138,18 +139,18 @@ jonction3 = Road(
 
 # Itinéraires possibles
 # ----------------------
-path01 = [entree0, section0, sortie1]
-path02 = [entree0, section0, jonction1, section1, sortie2]
-path03 = [entree0, section0, jonction1, section1, jonction2, section2, sortie3]
-path12 = [entree1, section1, sortie2]
-path13 = [entree1, section1, jonction2, section2, sortie3]
-path10 = [entree1, section1, jonction2, section2, jonction3, section3, sortie0]
-path23 = [entree2, section2, sortie3]
-path20 = [entree2, section2, jonction3, section3, sortie0]
-path21 = [entree2, section2, jonction3, section3, jonction0, section0, sortie1]
-path30 = [entree3, section3, sortie0]
-path31 = [entree3, section3, jonction0, section0, sortie1]
-path32 = [entree3, section3, jonction0, section0, jonction1, section1, sortie2]
+path01 = Path(entree0, section0, sortie1)
+path02 = Path(entree0, section0, jonction1, section1, sortie2)
+path03 = Path(entree0, section0, jonction1, section1, jonction2, section2, sortie3)
+path12 = Path(entree1, section1, sortie2)
+path13 = Path(entree1, section1, jonction2, section2, sortie3)
+path10 = Path(entree1, section1, jonction2, section2, jonction3, section3, sortie0)
+path23 = Path(entree2, section2, sortie3)
+path20 = Path(entree2, section2, jonction3, section3, sortie0)
+path21 = Path(entree2, section2, jonction3, section3, jonction0, section0, sortie1)
+path30 = Path(entree3, section3, sortie0)
+path31 = Path(entree3, section3, jonction0, section0, sortie1)
+path32 = Path(entree3, section3, jonction0, section0, jonction1, section1, sortie2)
 
 # Liste des itinéraires
 #----------------------
