@@ -1,10 +1,15 @@
 """
 Ce module contient la définition de la classe Vehicule
+
+______________________________________________________________________________________________________________
+Versions :
+0.1 :
+- Vehicule.index : cast la valeur en 'int'
 """
 import logging
 
-from position import Position, NONE_POSITION
-from road_item import RoadItem
+from roadmaps.position import NONE_POSITION
+from road_objects.road_item import RoadItem
 
 
 class Vehicule(RoadItem):
@@ -65,7 +70,7 @@ class Vehicule(RoadItem):
 
     @index.setter
     def index(self, value):
-        self._current_position_idx = value
+        self._current_position_idx = int(value)
 
     @property
     def speed(self):
@@ -74,6 +79,10 @@ class Vehicule(RoadItem):
     @speed.setter
     def speed(self, value):
         self._current_speed = value
+
+    @property
+    def category(self):
+        return int(self.speed)
 
     def add_path(self, roads:list):
         """

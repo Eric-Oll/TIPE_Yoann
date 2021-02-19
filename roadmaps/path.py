@@ -11,8 +11,8 @@ Create date : 14/02/2021
 Versionning :
 0.1 : Initial version
 """
-from position import Position
-from road import Road
+from roadmaps.position import Position
+from roadmaps.road import Road
 
 
 class Path():

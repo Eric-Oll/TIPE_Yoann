@@ -5,7 +5,7 @@ Ce module contient les routes permettant au véhicule de se déplacer
 
 """
 import numpy as np
-from position import Position
+from roadmaps.position import Position
 
 
 class Road(object): # Même que "class Road():" ou "class Road:"

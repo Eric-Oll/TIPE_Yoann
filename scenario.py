@@ -45,16 +45,19 @@ class Scenario:
             de booléens en paramètre et renvoie True si au moins l'un des booléens est égal à True (cf. "il existe"
             mathématique).
             """
-            logging.debug(f"""Frame #{num_frame} : {[f"{x.is_started}({x.index})" for x in self._traffic]}""")
-            self.add_frame([x.get_position(num_frame) for x in self._traffic])
+            logging.debug(f"""Frame #{num_frame} : {[f"{vehicule.is_started}({vehicule.index}) / Categ.={vehicule.category}" for vehicule in self._traffic]}""")
+            self.add_frame([(vehicule.get_position(num_frame), vehicule.category) for vehicule in self._traffic])
             num_frame += 1
 
-    def get_data(self, num_frame: int) -> tuple:
+    def get_data(self, num_frame: int, category=None) -> tuple:
         """
         Retourne la série de coordonnées pour l'animation
+        :param num_frame: N° de la frame
+        :category: filtre sur la catégorie du véhicule.
+            Par défaut None = tous les véhicules.
         :return: ([x0, ...xn], [y0, ..., yn])
         """
         return (
-            [position.x for position in self.frame[num_frame]],
-            [position.y for position in self.frame[num_frame]]
+            [position.x for position, categ in self.frame[num_frame] if categ==category or category is None],
+            [position.y for position, categ in self.frame[num_frame] if categ==category or category is None]
         )

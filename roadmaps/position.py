@@ -31,6 +31,9 @@ class Position:
         self._id = self._Get_id()
         self._position = (x,y)
 
+    def __repr__(self):
+        return f"<Position ({self.x},{self.y})>"
+
     @property
     def id(self):
         return self._id
