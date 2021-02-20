@@ -42,10 +42,13 @@ class Path():
         """
         Retourne la position correspondant à l'index
         """
-        if index >= 0 and index < len(self):
-            return self._path[index]
-        else:
-            raise IndexError(f"{__class__}.__getitem__ : Index ({index}) is out of range.")
+        if isinstance(index, slice):
+            return self._path[index] # TODO : Protéger en contrôlant l'index
+        elif isinstance(index, int):
+            if index >= 0 and index < len(self):
+                return self._path[index]
+            else:
+                raise IndexError(f"{__class__}.__getitem__ : Index ({index}) is out of range.")
 
     def __contains__(self, item:Position):
         """
@@ -55,3 +58,5 @@ class Path():
         """
         return item in self._path
 
+    def index(self, position:Position)->int:
+        return self._path.index(position)

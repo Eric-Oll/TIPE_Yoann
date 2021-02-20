@@ -45,7 +45,24 @@ class Scenario:
             de booléens en paramètre et renvoie True si au moins l'un des booléens est égal à True (cf. "il existe"
             mathématique).
             """
-            logging.debug(f"""Frame #{num_frame} : {[f"{vehicule.is_started}({vehicule.index}) / Categ.={vehicule.category}" for vehicule in self._traffic]}""")
+            logging.debug(f"""Frame #{num_frame} : {[f"{vehicule.is_started}({vehicule.index}) / Categ.={vehicule.category}" 
+                                                     for vehicule in self._traffic]}""")
+
+            # Mise à jour de la vitesse des véhicule
+            for vehicule in self._traffic:
+                logging.debug(f"Frame #{num_frame} : Update Speed for {vehicule.name} ...")
+                if vehicule.is_running:
+                    list_distance = []
+                    for item in [item for item in vehicule.Get_Items() if item.is_running and vehicule != item]:
+                        d = vehicule.distance(item.next_position)
+                        if d is not None:
+                            list_distance.append(d)
+                    logging.debug(f"Frame #{num_frame} : Update Speed for {vehicule.name} : distance with other {list_distance}")
+                    if len(list_distance) > 0:
+                        vehicule.update_speed(min(list_distance))
+                    else:
+                        vehicule.update_speed()
+
             self.add_frame([(vehicule.get_position(num_frame), vehicule.category) for vehicule in self._traffic])
             num_frame += 1
 

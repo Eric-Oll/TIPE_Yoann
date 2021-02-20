@@ -8,14 +8,14 @@ from parameters import * # Chargement des paramètres de simulation
 from scenario import Scenario
 
 import matplotlib.pyplot as plt
-from matplotlib import animation
+from matplotlib import animation, rc
 import random as rd
 
 from road_objects.vehicule import Vehicule
 from roadmaps.traffic_circle import landscape, roadmap
 
-logging.basicConfig(level=logging.INFO,
-                    # filemode='w', filename='./trace.log'
+logging.basicConfig(level=logging.DEBUG,
+                    filemode='w', filename='./trace.log'
                     )
 
 
@@ -64,8 +64,8 @@ def animate(k):
         x_series, y_series = movie.get_data(k, categ)
         logging.debug(f"Frame : {k}, Categ.{categ} :")
         if len(x_series) != 0:
-            logging.debug(f"... : X={x_series}")
-            logging.debug(f"... : Y={y_series}")
+            # logging.debug(f"... : X={x_series}")
+            # logging.debug(f"... : Y={y_series}")
             points_list[categ].set_data(x_series, y_series)
         else:
             logging.debug(f"... : pas de données")
@@ -76,7 +76,7 @@ def animate(k):
 departure_time = [x for x in range(0, MAX_DEPARTURE, MIN_TIME)] # On définit les heures de départ possibles
 for vehicule in traffic: # Pour chaque véhicule on choisit une heure de départ
     vehicule.start(departure_time.pop(rd.randint(0,len(departure_time)-1))) #... au hasard et jamais la même heure
-    vehicule.speed = [1,2,3,4,5][rd.randint(0,4)]
+    vehicule.speed = [1,2,3,4][rd.randint(0,3)]
 
 # Création du scénrio
 movie = Scenario(traffic)
@@ -90,4 +90,5 @@ ani = animation.FuncAnimation(fig=fig,
 
 plt.axis("equal")
 
+# ani.save('./video_TIPE.mp4')
 plt.show()

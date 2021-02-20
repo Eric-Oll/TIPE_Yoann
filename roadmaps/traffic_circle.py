@@ -5,6 +5,8 @@ Carte d'un rond-point
 
 Création du fond de carte
 """
+import logging
+
 import numpy as np
 from roadmaps.path import Path
 from roadmaps.road import Road
@@ -57,28 +59,28 @@ section0 = Road(
     x_interval=(np.arccos((r/7)/rtraj),0),
     y_interval=(-np.pi/2,np.arcsin(-(r/24)/rtraj)),
     path_functions=(lambda t: rtraj*np.cos(t), lambda t: rtraj*np.sin(t)),
-    step=100
+    step=500
     )
 
 section1 = Road(
     x_interval=(0,np.arccos((r/7)/rtraj)),
     y_interval=(np.arcsin((r/24)/rtraj),np.pi/2),
     path_functions=(lambda t: rtraj*np.cos(t), lambda t: rtraj*np.sin(t)),
-    step=100
+    step=500
     )
 
 section2 = Road(
     x_interval=(np.arccos(-(r/7)/rtraj),np.pi),
     y_interval=(np.pi/2,np.arcsin((r/24)/rtraj)),
     path_functions=(lambda t: rtraj*np.cos(t), lambda t: rtraj*np.sin(t)),
-    step=100
+    step=500
     )
 
 section3 = Road(
     x_interval=(np.pi,np.arccos(-(r/7)/rtraj)),
     y_interval=(np.arcsin(-(r/24)/rtraj),-np.pi/2),
     path_functions=(lambda t: rtraj*np.cos(t), lambda t: rtraj*np.sin(t)),
-    step=100
+    step=500
     )
 
 # ... Les sorties de rond-point
@@ -113,28 +115,28 @@ jonction0 = Road(
     x_interval=(np.arccos(-(r/7)/rtraj),np.arccos((r/7)/rtraj)),
     y_interval=(-np.pi/2,-np.pi/2),
     path_functions=(lambda t: rtraj*np.cos(t),lambda t: rtraj*np.sin(t)),
-    step=25
+    step=125
     )
 
 jonction1 = Road(
     x_interval=(0,0),
     y_interval=(np.arcsin(-(r/24)/rtraj),np.arcsin((r/24)/rtraj)),
     path_functions=(lambda t: rtraj*np.cos(t),lambda t: rtraj*np.sin(t)),
-    step=9
+    step=50
     )
 
 jonction2 = Road(
     x_interval=(np.arccos((r/7)/rtraj),np.arccos(-(r/7)/rtraj)),
     y_interval=(np.pi/2,np.pi/2),
     path_functions=(lambda t: rtraj*np.cos(t),lambda t: rtraj*np.sin(t)),
-    step=25
+    step=125
     )
 
 jonction3 = Road(
     x_interval=(np.pi,np.pi),
     y_interval=(np.arcsin((r/24)/rtraj),np.arcsin(-(r/24)/rtraj)),
     path_functions=(lambda t: rtraj*np.cos(t),lambda t: rtraj*np.sin(t)),
-    step=9
+    step=50
     )
 
 # Itinéraires possibles
@@ -160,13 +162,28 @@ roadmap = [path01, path02, path03,
            path30, path31, path32]
 
 # Fond d'écran
+
+# TODO : Revoir la fonction f1 pour qu'il n'y ait pas le message d'erreur
 def f1(x,r): # Création de la partie positive du cercle extérieur, tronqué
     y = x**2-63*r/64
-    return np.sqrt(np.sqrt(y/abs(y))*(r**2*(np.sqrt((abs(abs(x)-r/8))/(abs(x)-r/8)))-(x**2)))
+    Y = y/abs(y)
+    X = (abs(abs(x)-r/8))/(abs(x)-r/8)
+    if Y<0 or X<0:
+        # print(f"f1({x},{r}) => Y={Y}, X={X}")
+        return np.nan
+    elif np.sqrt(Y)*(r**2*np.sqrt(X)-(x**2))<0:
+        # print(f"f1({x},{r}) => np.sqrt(Y)*(r**2*np.sqrt(X)-(x**2))={np.sqrt(Y)*(r**2*np.sqrt(X)-(x**2))}")
+        return np.nan
 
-def f2(x,r): # Création de la partie négative du cercle extérieur, tronqué
-    y = x**2-63*r/64
-    return -np.sqrt(np.sqrt(y/abs(y))*(r**2*(np.sqrt((abs(abs(x)-r/8))/(abs(x)-r/8)))-(x**2)))
+    value = np.sqrt(np.sqrt(Y)*(r**2*np.sqrt(X)-(x**2)))
+    return value
+
+
+# def f2(x,r): # Création de la partie négative du cercle extérieur, tronqué
+#     y = x**2-63*r/64
+#     return -np.sqrt(np.sqrt(y/abs(y))*(r**2*(np.sqrt((abs(abs(x)-r/8))/(abs(x)-r/8)))-(x**2)))
+
+f2 = lambda x,r: -f1(x, r)
 
 # TODO : Transformer landscape en fonction d'init. pour l'animation
 def landscape(ax):
@@ -196,7 +213,11 @@ def landscape(ax):
     Y1 = [np.sqrt(r1**2-x**2) for x in X1] # Pour la partie positive du cercle intérieur
     Y2 = [-np.sqrt(r1**2-x**2) for x in X2] # Pour la partie négative du cercle intérieur
     Y3 = [f1(x,r2) for x in X3] # Pour la partie positive du cercle extérieur, tronqué
+    # X3 = [r2 * np.cos(t) for t in np.linspace(np.pi,np.arccos(-(r/7)/r2), 100)]
+    # Y3 = [r2 * np.sin(t) for t in np.linspace(np.pi,np.arcsin(-(r/7)/r2), 100)]
     Y4 = [f2(x,r2) for x in X4] # Pour la partie négative du cercle extérieur, tronqué
+    # X4 = [-r2 * np.cos(t) for t in np.linspace(np.pi,np.arccos(-(r/7)/r2), 100)]
+    # Y4 = [-r2 * np.sin(t) for t in np.linspace(np.pi,np.arcsin(-(r/7)/r2), 100)]
     Y5 = [f3(x) for x in X5] # Pour la route ouest
     Y6 = [f4(x) for x in X6] # Pour la route est
 
