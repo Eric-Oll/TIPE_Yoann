@@ -12,18 +12,13 @@ from matplotlib import animation, rc
 import random as rd
 
 from road_objects.vehicule import Vehicule
-from roadmaps.traffic_circle import landscape, roadmap
+from roadmaps.traffic_circle import TrafficCircle
 
 logging.basicConfig(level=logging.DEBUG,
                     filemode='w', filename='./trace.log'
                     )
 
-
 # Section 1 : Initialisation
-
-# Création de la liste de véhicules
-traffic = [Vehicule(path=roadmap[rd.randint(0,len(roadmap)-1)]) for x in range(NB_VEHICULE)]
-
 
 # 1.2 - Création de la figure et du rond-point
 # a) Création de la figure et paramétrages
@@ -34,10 +29,12 @@ x_min, x_max, y_min, y_max = ax.axis('tight')
 x_min, x_max, y_min, y_max = -39, 39, -29, 29
 ax.set(xlim=(x_min, x_max), ylim=(y_min, y_max))
 
-# Création du fond de carte
-landscape(
-    ax,       # Zone grapgique
-    )
+# Création de la carte
+trafic_circle = TrafficCircle(ax)
+
+# Création de la liste de véhicules
+traffic = [Vehicule(path=trafic_circle.roadmap[rd.randint(0,len(trafic_circle.roadmap)-1)])
+           for x in range(NB_VEHICULE)]
 
 
 # Création de la ligne qui sera mise à jour au fur et à mesure
@@ -51,8 +48,8 @@ for color in CATEG_COLORS:
 
 
 # Gestion des limites de la fenêtre
-ax.set_xlim([-2, 2])
-ax.set_ylim([-2, 2])
+# ax.set_xlim([-2, 2])
+# ax.set_ylim([-2, 2])
 
 # Création de la fonction qui sera appelée à chaque nouvelle image de l'animation
 def animate(k):
@@ -81,10 +78,14 @@ for vehicule in traffic: # Pour chaque véhicule on choisit une heure de départ
 # Création du scénrio
 movie = Scenario(traffic)
 
+for art in trafic_circle.landscape():
+    art
+
 ani = animation.FuncAnimation(fig=fig,
                               func=animate,
                               frames=len(movie),
                               interval=20,
+                              # init_func=trafic_circle.landscape,
                               blit=True,
                               repeat=False)
 
