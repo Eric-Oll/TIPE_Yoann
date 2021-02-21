@@ -10,7 +10,7 @@ import logging
 
 from road_objects.road_item import RoadItem, DISTANCE
 from parameters import MAX_SPEED, MAX_SPEED_UP, MAX_SPEED_DOWN, MIN_DISTANCE, SPEED_START, MAX_SPEED_DOWN_FUNC, \
-    MAX_SPEED_UP_FUNC
+    MAX_SPEED_UP_FUNC, CATEG_COLORS
 
 
 class Vehicule(RoadItem):
@@ -27,10 +27,11 @@ class Vehicule(RoadItem):
         """
         return [vehicule for vehicule in cls.Get_Items if isinstance(vehicule, Vehicule)]
 
-    def __init__(self, path=None, name=None):
-        super(Vehicule, self).__init__(path=path, name=name)
+    def __init__(self, axe, path=None, name=None):
+        super(Vehicule, self).__init__(axe=axe, path=path, name=name)
         self._init_time = 0
         self._current_speed = SPEED_START # On démarre avec la vitesse maximale
+
 
     def __repr__(self):
         return f"<Vehicule {self.name} : position={self.position}(index={self.index}), speed={self.speed}, length={self.length}>"
@@ -87,3 +88,15 @@ class Vehicule(RoadItem):
                              self.speed + self.speed * MAX_SPEED_UP      # vitesse d'accélération maximal
                          )
 
+    def get_plot(self, ax, new_time=None):
+        """
+        Retourne les éléménts graphique à afficher
+        """
+        if new_time is not None:
+            self.forward(new_time)
+
+        if self.position:
+            self["Point"].set_data([self.position.x], [self.position.y])
+            self["Point"].set_color(CATEG_COLORS[self.category])
+
+        return self.get_components() if self.position else []

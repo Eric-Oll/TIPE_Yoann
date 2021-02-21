@@ -26,16 +26,16 @@ logging.basicConfig(level=logging.DEBUG,
 fig, ax = plt.subplots()
 ax.margins(0,0)
 
-x_min, x_max, y_min, y_max = ax.axis('tight')
-x_min, x_max, y_min, y_max = -39, 39, -29, 29
-ax.set(xlim=(x_min, x_max), ylim=(y_min, y_max))
+# x_min, x_max, y_min, y_max = ax.axis('tight')
+# x_min, x_max, y_min, y_max = -39, 39, -29, 29
+# ax.set(xlim=(x_min, x_max), ylim=(y_min, y_max))
 
 # Création de la carte
-# simulation_map = TrafficCircle(ax)
-simulation_map = LinearRoad(ax)
+simulation_map = TrafficCircle(ax)
+# simulation_map = LinearRoad(ax)
 
 # Création de la liste de véhicules
-traffic = [Vehicule(path=simulation_map.roadmap[rd.randint(0, len(simulation_map.roadmap) - 1)])
+traffic = [Vehicule(axe=ax, path=simulation_map.roadmap[rd.randint(0, len(simulation_map.roadmap) - 1)])
            for x in range(NB_VEHICULE)]
 
 
@@ -78,17 +78,17 @@ for vehicule in traffic: # Pour chaque véhicule on choisit une heure de départ
     vehicule.speed = [1,2,3,4][rd.randint(0,3)]
 
 # Création du scénrio
-movie = Scenario(traffic)
+movie = Scenario(traffic, ax)
 
 for art in simulation_map.landscape():
     art
 
 ani = animation.FuncAnimation(fig=fig,
-                              func=animate,
-                              frames=len(movie),
+                              func=movie,
+                              frames=movie.get_sequence(),
                               interval=FRAMES_INTERVAL,
                               # init_func=simulation_map.landscape,
-                              blit=True,
+                              blit=False,
                               repeat=False)
 
 plt.axis("equal")
