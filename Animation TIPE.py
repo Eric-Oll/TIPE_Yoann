@@ -5,6 +5,7 @@ Module principale pour l'animation
 import logging
 
 from parameters import * # Chargement des paramètres de simulation
+from roadmaps.linear_road import LinearRoad
 from scenario import Scenario
 
 import matplotlib.pyplot as plt
@@ -30,10 +31,11 @@ x_min, x_max, y_min, y_max = -39, 39, -29, 29
 ax.set(xlim=(x_min, x_max), ylim=(y_min, y_max))
 
 # Création de la carte
-trafic_circle = TrafficCircle(ax)
+# simulation_map = TrafficCircle(ax)
+simulation_map = LinearRoad(ax)
 
 # Création de la liste de véhicules
-traffic = [Vehicule(path=trafic_circle.roadmap[rd.randint(0,len(trafic_circle.roadmap)-1)])
+traffic = [Vehicule(path=simulation_map.roadmap[rd.randint(0, len(simulation_map.roadmap) - 1)])
            for x in range(NB_VEHICULE)]
 
 
@@ -78,14 +80,14 @@ for vehicule in traffic: # Pour chaque véhicule on choisit une heure de départ
 # Création du scénrio
 movie = Scenario(traffic)
 
-for art in trafic_circle.landscape():
+for art in simulation_map.landscape():
     art
 
 ani = animation.FuncAnimation(fig=fig,
                               func=animate,
                               frames=len(movie),
-                              interval=20,
-                              # init_func=trafic_circle.landscape,
+                              interval=FRAMES_INTERVAL,
+                              # init_func=simulation_map.landscape,
                               blit=True,
                               repeat=False)
 
