@@ -3,7 +3,7 @@ Ce module regroupe la liste des paramètres de simulation
 
 """
 
-FRAMES_INTERVAL = 1000    # Interval de temps entre 2 frames (ms)
+FRAMES_INTERVAL = 100    # Interval de temps entre 2 frames (ms)
 
 NB_VEHICULE = 1       # Nombre de véhicules dans la simulation
 MIN_TIME = 10           # Temps minimum entre les véhicules
