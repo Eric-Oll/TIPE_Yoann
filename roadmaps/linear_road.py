@@ -24,6 +24,7 @@ class LinearRoad(Map):
         self.init_road()
 
     def init_graphic(self):
+        self._ax.get_figure().set_size_inches(20,6)
         self._ax.set_xlim(-20, 20)
         self._ax.set_ylim(-2, 2)
 

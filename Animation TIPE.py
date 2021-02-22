@@ -26,9 +26,9 @@ logging.basicConfig(level=logging.DEBUG,
 fig, ax = plt.subplots()
 ax.margins(0,0)
 
-x_min, x_max, y_min, y_max = ax.axis('tight')
-x_min, x_max, y_min, y_max = -39, 39, -29, 29
-ax.set(xlim=(x_min, x_max), ylim=(y_min, y_max))
+# x_min, x_max, y_min, y_max = ax.axis('tight')
+# x_min, x_max, y_min, y_max = -39, 39, -29, 29
+# ax.set(xlim=(x_min, x_max), ylim=(y_min, y_max))
 
 # Création de la carte
 # simulation_map = TrafficCircle(ax)

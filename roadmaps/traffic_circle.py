@@ -19,8 +19,12 @@ class TrafficCircle(Map):
 
     def __init__(self, axe):
         super(TrafficCircle, self).__init__(axe=axe)
+        self.init_graphic()
         self.init_roads()
 
+    def init_graphic(self):
+        self._ax.set_xlim(-39, 39)
+        self._ax.set_ylim(-29, 29)
 
     def init_roads(self):
         """
