@@ -51,17 +51,20 @@ class Scenario:
             """
             logging.debug(f"""Frame #{num_frame} : {[f"{vehicule.is_started}({vehicule.index}) / Categ.={vehicule.category}" 
                                                      for vehicule in self._traffic]}""")
+            print(f"{num_frame}",end="..")
 
             # Mise à jour de la vitesse des véhicule
             for vehicule in self._traffic:
-                logging.debug(f"Frame #{num_frame} : Update Speed for {vehicule.name} ...")
                 if vehicule.is_running:
+                    logging.log(0, f"Frame #{num_frame} : Update Speed for {vehicule.name} ...")
                     list_distance = []
                     for item in [item for item in vehicule.Get_Items() if item.is_running and vehicule != item]:
                         d = vehicule.distance(item.next_position)
+                        logging.debug(f"Frame #{num_frame} : compare with {item.name} / distance={d} (position={item.next_position}")
                         if d is not None:
                             list_distance.append(d)
-                    logging.debug(f"Frame #{num_frame} : Update Speed for {vehicule.name} : distance with other {list_distance}")
+                    logging.log(0, f"Frame #{num_frame} : List of distances = {list_distance}")
+                    logging.log(0, f"Frame #{num_frame} : Update Speed for {vehicule.name} : distance with other {list_distance}")
                     if len(list_distance) > 0:
                         vehicule.update_speed(min(list_distance))
                     else:

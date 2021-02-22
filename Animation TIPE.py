@@ -15,8 +15,9 @@ import random as rd
 from road_objects.vehicule import Vehicule
 from roadmaps.traffic_circle import TrafficCircle
 
-logging.basicConfig(level=logging.DEBUG,
-                    filemode='w', filename='./trace.log'
+logging.BASIC_FORMAT = '%(levelname)s:%(message)s'
+logging.basicConfig(level=logging.INFO,
+                    # filemode='w', filename='./trace.log'
                     )
 
 # Section 1 : Initialisation
@@ -44,7 +45,7 @@ point, = ax.plot([], [], ls="none", marker="o")
 points_list = []
 for color in CATEG_COLORS:
     points_list.extend(ax.plot([],[], color=color, ls="none", marker="o"))
-# text = ax.text(0,2,"<texte>" )
+# text = ax.text(-20,2,"<texte>" )
 # points_list.append(text)
 
 # Gestion des limites de la fenêtre
@@ -74,9 +75,9 @@ def animate(k):
 # Génération de l'animation
 departure_time = [x for x in range(0, MAX_DEPARTURE, MIN_TIME)] # On définit les heures de départ possibles
 for i, vehicule in enumerate(traffic): # Pour chaque véhicule on choisit une heure de départ
-    # vehicule.start(departure_time.pop(rd.randint(0,len(departure_time)-1))) #... au hasard et jamais la même heure
-    section_size = int(len(departure_time)/len(traffic))
-    vehicule.start(departure_time[i*section_size:min((i+1)*section_size, len(departure_time))][rd.randint(0, section_size-1)])
+    vehicule.start(departure_time.pop(rd.randint(0,len(departure_time)-1))) #... au hasard et jamais la même heure
+    # section_size = int(len(departure_time)/len(traffic))
+    # vehicule.start(departure_time[i*section_size:min((i+1)*section_size, len(departure_time))][rd.randint(0, section_size-1)])
     vehicule.speed = [1,2,3,4][rd.randint(0,3)]
 
 # Création du scénrio
@@ -91,7 +92,7 @@ ani = animation.FuncAnimation(fig=fig,
                               interval=FRAMES_INTERVAL,
                               # init_func=simulation_map.landscape,
                               blit=True,
-                              repeat=False)
+                              repeat=True)
 
 plt.axis("equal")
 

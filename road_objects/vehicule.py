@@ -29,6 +29,7 @@ class Vehicule(RoadItem):
 
     def __init__(self, path=None, name=None):
         super(Vehicule, self).__init__(path=path, name=name)
+        if name is None: self._name = f"Vehicle_{self.id}"
         self._init_time = 0
         self._current_speed = SPEED_START # On démarre avec la vitesse maximale
 
@@ -76,7 +77,7 @@ class Vehicule(RoadItem):
             self.speed = min(MAX_SPEED,                                         # Vitesse maximal
                              max(MAX_SPEED_DOWN_FUNC(self.speed, distance),     # vitesse de décélération maximum
                                  min(MAX_SPEED_UP_FUNC(self.speed, distance),   # vitesse d'accélération maximal
-                                     SPEED_START,                               # Vitesse de démarrage
+                                     # SPEED_START,                               # Vitesse de démarrage
                                      max(0,                                     # Vitesse minimal
                                          (distance-MIN_DISTANCE)/ratio)         # Vitesse calculé
                                      )
