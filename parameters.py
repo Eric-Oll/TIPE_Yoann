@@ -3,9 +3,9 @@ Ce module regroupe la liste des paramètres de simulation
 
 """
 
-FRAMES_INTERVAL = 1000    # Interval de temps entre 2 frames (ms)
+FRAMES_INTERVAL = 100    # Interval de temps entre 2 frames (ms)
 
-NB_VEHICULE = 5       # Nombre de véhicules dans la simulation
+NB_VEHICULE = 3       # Nombre de véhicules dans la simulation
 MIN_TIME = 10           # Temps minimum entre les véhicules
 MAX_DEPARTURE = 200    # Heure maximum pour le départ des véhicules
 
@@ -27,3 +27,6 @@ MAX_SPEED_UP_FUNC = lambda speed, distance: speed+0.5
 # Fonction de décélération maximum
 # MAX_SPEED_DOWN_FUNC = lambda speed, distance: speed-speed*MAX_SPEED_DOWN
 MAX_SPEED_DOWN_FUNC = lambda speed, distance: speed-0.5
+
+# Fonction de calcul de la distance
+DISTANCE = lambda pos1, pos2: abs(pos1.x-pos2.x) + abs(pos1.y-pos2.y) # Norme 1

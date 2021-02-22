@@ -12,12 +12,12 @@ Versionning :
 0.1 : Initial version
 """
 import logging
+
+from parameters import DISTANCE
 from roadmaps.path import Path
 from roadmaps.position import NONE_POSITION, Position
 
-# Fonction de calcul de la distance
-# -> Utilisation de la Norme 1
-DISTANCE = lambda pos1, pos2: abs(pos1.x-pos2.x) + abs(pos1.y-pos2.y)
+
 
 class RoadItem:
     """
