@@ -4,6 +4,8 @@ Ce module contient
 
 """
 import logging
+import pandas as pd
+from parameters import FLAG_REPORT
 
 MAX_FRAMES = 10000   # Nombre maximum d'étape du scénario
 
@@ -37,6 +39,8 @@ class Scenario:
         Création des frames
         """
         num_frame = 0
+        report = pd.DataFrame(columns=['frame', 'parameter']+[vehicule.name for vehicule in self._traffic])
+
         while not all([vehicule.is_ended for vehicule in self._traffic]) and num_frame < MAX_FRAMES:
             """
             La fonction "all" est une fonction qui prend une liste de booléens en paramètre et renvoie True si tous les
@@ -63,8 +67,37 @@ class Scenario:
                     else:
                         vehicule.update_speed()
 
-            self.add_frame([(vehicule.get_position(num_frame), vehicule.category) for vehicule in self._traffic])
-            num_frame += 1
+            # Collecte des données de reporting
+            if FLAG_REPORT:
+                # Statut
+                report = report.append(dict(zip(report.columns,
+                                                [num_frame, 'running'] + [vehicule.is_running for vehicule in self._traffic])),
+                                       ignore_index=True)
+
+                # Vitesse
+                report = report.append(dict(zip(report.columns,
+                                                [num_frame, 'speed'] + [vehicule.speed for vehicule in self._traffic])),
+                                       ignore_index=True)
+
+                # Position
+                report = report.append(dict(zip(report.columns,
+                                                [num_frame, 'position'] + [(vehicule.position.x, vehicule.position.y)
+                                                                           if vehicule.position else None
+                                                                           for vehicule in self._traffic])),
+                                       ignore_index=True)
+
+
+            # ... Fin collecte reporting
+
+            self.add_frame({'position' :[(vehicule.get_position(num_frame), vehicule.category) for vehicule in self._traffic],
+                            'state': [(vehicule.name, vehicule.is_running) for vehicule in self._traffic],
+                            })
+            num_frame += 1      # On passe à la frame suivante
+
+        # Génération du fichier de réporting
+        if FLAG_REPORT:
+            report.to_csv('./report_simulation.csv', sep=';', index=None)
+
 
     def get_data(self, num_frame: int, category=None) -> tuple:
         """
@@ -75,6 +108,13 @@ class Scenario:
         :return: ([x0, ...xn], [y0, ..., yn])
         """
         return (
-            [position.x for position, categ in self.frame[num_frame] if categ==category or category is None],
-            [position.y for position, categ in self.frame[num_frame] if categ==category or category is None]
+            [position.x for position, categ in self.frame[num_frame]['position'] if categ==category or category is None],
+            [position.y for position, categ in self.frame[num_frame]['position'] if categ==category or category is None]
         )
+
+    def get_state(self, num_frame:int)->list:
+        """
+        Retourne l'état des véhicules pour la frame <num_frame>
+        :return: [(name, state), ...]
+        """
+        return self.frame[num_frame]['state']

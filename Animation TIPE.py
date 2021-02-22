@@ -26,9 +26,6 @@ logging.basicConfig(level=logging.DEBUG,
 fig, ax = plt.subplots()
 ax.margins(0,0)
 
-# x_min, x_max, y_min, y_max = ax.axis('tight')
-# x_min, x_max, y_min, y_max = -39, 39, -29, 29
-# ax.set(xlim=(x_min, x_max), ylim=(y_min, y_max))
 
 # Création de la carte
 # simulation_map = TrafficCircle(ax)
@@ -47,7 +44,8 @@ point, = ax.plot([], [], ls="none", marker="o")
 points_list = []
 for color in CATEG_COLORS:
     points_list.extend(ax.plot([],[], color=color, ls="none", marker="o"))
-
+text = ax.text(0,2,"<texte>" )
+points_list.append(text)
 
 # Gestion des limites de la fenêtre
 # ax.set_xlim([-2, 2])
@@ -65,16 +63,20 @@ def animate(k):
         if len(x_series) != 0:
             # logging.debug(f"... : X={x_series}")
             # logging.debug(f"... : Y={y_series}")
-            points_list[categ].set_data(x_series, y_series)
+            points_list[categ].set_data(x_series, y_series) # Avec couleur en fonction de la vitesse
+            # points_list[5].set_data(x_series, y_series) # Sans changement de couleur
         else:
+            points_list[categ].set_data([],[])
             logging.debug(f"... : pas de données")
-
+        text.set_text(f"""Frame {k} : {",".join(f"{name}={state}"  for name, state in movie.get_state(k))}""")
     return points_list
 
 # Génération de l'animation
 departure_time = [x for x in range(0, MAX_DEPARTURE, MIN_TIME)] # On définit les heures de départ possibles
-for vehicule in traffic: # Pour chaque véhicule on choisit une heure de départ
-    vehicule.start(departure_time.pop(rd.randint(0,len(departure_time)-1))) #... au hasard et jamais la même heure
+for i, vehicule in enumerate(traffic): # Pour chaque véhicule on choisit une heure de départ
+    # vehicule.start(departure_time.pop(rd.randint(0,len(departure_time)-1))) #... au hasard et jamais la même heure
+    section_size = int(len(departure_time)/len(traffic))
+    vehicule.start(departure_time[i*section_size:min((i+1)*section_size, len(departure_time))][rd.randint(0, section_size-1)])
     vehicule.speed = [1,2,3,4][rd.randint(0,3)]
 
 # Création du scénrio
