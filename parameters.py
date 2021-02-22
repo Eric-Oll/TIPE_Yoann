@@ -2,10 +2,13 @@
 Ce module regroupe la liste des paramètres de simulation
 
 """
+import numpy as np
 
-FRAMES_INTERVAL = 100    # Interval de temps entre 2 frames (ms)
+FLAG_REPORT = True      # Indicateur de création d'un report de données
 
-NB_VEHICULE = 3       # Nombre de véhicules dans la simulation
+FRAMES_INTERVAL = 10    # Interval de temps entre 2 frames (ms)
+
+NB_VEHICULE = 10       # Nombre de véhicules dans la simulation
 MIN_TIME = 10           # Temps minimum entre les véhicules
 MAX_DEPARTURE = 200    # Heure maximum pour le départ des véhicules
 
@@ -17,7 +20,7 @@ CATEG_COLORS = \
 MAX_SPEED = 5           # Vitesse maximum
 MAX_SPEED_DOWN = 0.1    # %age max. de décélération
 MAX_SPEED_UP = 0.05      # %age max. d'accélération
-MIN_DISTANCE = 10      # distance minimal avec entre les RoadItem
+MIN_DISTANCE = 0      # distance minimal avec entre les RoadItem
 SPEED_START = 1       # Vitesse de démarrage
 
 # Fonction d'accélération maximum
@@ -29,4 +32,5 @@ MAX_SPEED_UP_FUNC = lambda speed, distance: speed+0.5
 MAX_SPEED_DOWN_FUNC = lambda speed, distance: speed-0.5
 
 # Fonction de calcul de la distance
-DISTANCE = lambda pos1, pos2: abs(pos1.x-pos2.x) + abs(pos1.y-pos2.y) # Norme 1
+# DISTANCE = lambda pos1, pos2: abs(pos1.x-pos2.x) + abs(pos1.y-pos2.y) # Norme 1
+DISTANCE = lambda pos1, pos2: np.sqrt((pos1.x-pos2.x)**2 + (pos1.y-pos2.y)**2) # Norme 2

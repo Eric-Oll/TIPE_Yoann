@@ -28,8 +28,8 @@ ax.margins(0,0)
 
 
 # Création de la carte
-# simulation_map = TrafficCircle(ax)
-simulation_map = LinearRoad(ax)
+simulation_map = TrafficCircle(ax)
+# simulation_map = LinearRoad(ax)
 
 # Création de la liste de véhicules
 traffic = [Vehicule(path=simulation_map.roadmap[rd.randint(0, len(simulation_map.roadmap) - 1)])
@@ -44,8 +44,8 @@ point, = ax.plot([], [], ls="none", marker="o")
 points_list = []
 for color in CATEG_COLORS:
     points_list.extend(ax.plot([],[], color=color, ls="none", marker="o"))
-text = ax.text(0,2,"<texte>" )
-points_list.append(text)
+# text = ax.text(0,2,"<texte>" )
+# points_list.append(text)
 
 # Gestion des limites de la fenêtre
 # ax.set_xlim([-2, 2])
@@ -68,7 +68,7 @@ def animate(k):
         else:
             points_list[categ].set_data([],[])
             logging.debug(f"... : pas de données")
-        text.set_text(f"""Frame {k} : {",".join(f"{name}={state}"  for name, state in movie.get_state(k))}""")
+        # text.set_text(f"""Frame {k} : {",".join(f"{name}={state}"  for name, state in movie.get_state(k))}""")
     return points_list
 
 # Génération de l'animation

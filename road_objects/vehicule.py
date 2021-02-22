@@ -73,12 +73,12 @@ class Vehicule(RoadItem):
         if not self.is_running : return
         if distance:
             ratio = DISTANCE(self.path[0], self.path[1])
-            self.speed = min(MAX_SPEED,                                  # Vitesse maximal
-                             max(MAX_SPEED_DOWN_FUNC(self.speed, distance),  # vitesse de décélération maximum
-                                 min(MAX_SPEED_UP_FUNC(self.speed, distance), # vitesse d'accélération maximal
-                                     SPEED_START,                        # Vitesse de démarrage
-                                     max(0,                              # Vitesse minimal
-                                         (distance-MIN_DISTANCE)/ratio)  # Vitesse calculé
+            self.speed = min(MAX_SPEED,                                         # Vitesse maximal
+                             max(MAX_SPEED_DOWN_FUNC(self.speed, distance),     # vitesse de décélération maximum
+                                 min(MAX_SPEED_UP_FUNC(self.speed, distance),   # vitesse d'accélération maximal
+                                     SPEED_START,                               # Vitesse de démarrage
+                                     max(0,                                     # Vitesse minimal
+                                         (distance-MIN_DISTANCE)/ratio)         # Vitesse calculé
                                      )
                                  )
                          )
