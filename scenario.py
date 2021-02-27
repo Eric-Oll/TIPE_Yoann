@@ -17,14 +17,70 @@ class Scenario:
     def __init__(self, traffic: list):
         self._traffic = traffic     # Liste des véhicules
         self._frames = list()       # liste des coordonnées pour le traffic pour une étape
-        self.create_frames()
+        # self.create_frames()
 
     def __len__(self):
         return len(self.frame)
 
+    def __call__(self, frame, *args, **kwargs):
+        print(f"{frame}", end="..")
+
+        # Mise à jour de la vitesse des véhicule
+        for vehicule in self._traffic:
+            if vehicule.is_running:
+                logging.log(0, f"Frame #{frame} : Update Speed for {vehicule.name} ...")
+                list_distance = []
+                for item in [item for item in vehicule.Get_Items() if item.is_running and vehicule != item]:
+                    d = vehicule.distance(item.next_position)
+                    logging.debug(
+                        f"Frame #{frame} : compare with {item.name} / distance={d} (position={item.next_position}")
+                    if d is not None:
+                        list_distance.append(d)
+                logging.log(0, f"Frame #{frame} : List of distances = {list_distance}")
+                logging.log(0,
+                            f"Frame #{frame} : Update Speed for {vehicule.name} : distance with other {list_distance}")
+                if len(list_distance) > 0:
+                    vehicule.update_speed(min(list_distance))
+                else:
+                    vehicule.update_speed()
+
+        # Collecte des données de reporting
+        if FLAG_REPORT:
+            # Statut
+            report = report.append(dict(zip(report.columns,
+                                            [frame, 'running'] + [vehicule.is_running for vehicule in
+                                                                      self._traffic])),
+                                   ignore_index=True)
+
+            # Vitesse
+            report = report.append(dict(zip(report.columns,
+                                            [frame, 'speed'] + [vehicule.speed for vehicule in self._traffic])),
+                                   ignore_index=True)
+
+            # Position
+            report = report.append(dict(zip(report.columns,
+                                            [frame, 'position'] + [(vehicule.position.x, vehicule.position.y)
+                                                                       if vehicule.position else None
+                                                                       for vehicule in self._traffic])),
+                                   ignore_index=True)
+
+        # ... Fin collecte reporting
+
+        self.add_frame({'position' :[(vehicule.get_position(frame), vehicule.category) for vehicule in self._traffic],
+                        'state': [(vehicule.name, vehicule.is_running) for vehicule in self._traffic],
+                        })
+
     @property
     def frame(self):
         return self._frames
+
+    def get_sequence(self):
+        num_frame = 0
+        while not all([vehicule.is_ended for vehicule in self._traffic]) and num_frame < MAX_FRAMES:
+            yield num_frame
+            num_frame += 1
+        print("End of movie.")
+
 
     def add_frame(self, value: list) -> None:
         """

@@ -58,6 +58,7 @@ def animate(k):
 
     # point.set_data(*movie.get_data(k))
     # return point,
+    movie(k)
     for categ in range(len(CATEG_COLORS)):
         x_series, y_series = movie.get_data(k, categ)
         logging.debug(f"Frame : {k}, Categ.{categ} :")
@@ -88,7 +89,7 @@ for art in simulation_map.landscape():
 
 ani = animation.FuncAnimation(fig=fig,
                               func=animate,
-                              frames=len(movie),
+                              frames=movie.get_sequence(),
                               interval=FRAMES_INTERVAL,
                               # init_func=simulation_map.landscape,
                               blit=True,
