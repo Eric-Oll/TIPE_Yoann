@@ -29,8 +29,8 @@ ax.margins(0,0)
 
 
 # Création de la carte
-simulation_map = TrafficCircle(ax)
-# simulation_map = LinearRoad(ax)
+# simulation_map = TrafficCircle(ax)
+simulation_map = LinearRoad(ax)
 
 # Création de la liste de véhicules
 traffic = [Vehicule(path=simulation_map.roadmap[rd.randint(0, len(simulation_map.roadmap) - 1)])

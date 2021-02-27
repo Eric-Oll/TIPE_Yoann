@@ -18,9 +18,9 @@ CATEG_COLORS = \
 
 # Paramètres de vitesse des véhicules
 MAX_SPEED = 5           # Vitesse maximum
-MAX_SPEED_DOWN = 0.1    # %age max. de décélération
-MAX_SPEED_UP = 0.05      # %age max. d'accélération
-MIN_DISTANCE = 5000      # distance minimal avec entre les RoadItem
+MAX_SPEED_DOWN = 1    # %age max. de décélération
+MAX_SPEED_UP = 0.15      # %age max. d'accélération
+MIN_DISTANCE = 5      # distance minimal avec entre les RoadItem
 SPEED_START = 1       # Vitesse de démarrage
 
 # Fonction d'accélération maximum

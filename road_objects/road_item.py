@@ -229,7 +229,7 @@ class RoadItem:
         if position in self.remain_path:
             distance_segments = 0
             for i in range(self._current_position_idx, self.path.index(position) - 1):
-                distance_segments += DISTANCE(self.path[i], self.path[+1])
+                distance_segments += DISTANCE(self.path[i], self.path[i+1])
             return distance_segments
         else:
             return None
