@@ -35,18 +35,18 @@ class TestRoadItem(TestCase):
         """
         Test le calcul de la distance
         """
-        ECART_START = 10
+        ECART_POSITION = len(self.path)-2  # 10
 
         # Distance entre 2 positions successive
         dist_position = DISTANCE(self.path[0], self.path[1])
         logging.debug(f'TestRoadItem.test_distance : Distance entre 2 positions : {dist_position}')
 
         # Positionnement des RoadItem
-        position2 = self.road_items[1].path[ECART_START]
-        self.assertEqual(position2, self.path[ECART_START],
+        position2 = self.road_items[1].path[ECART_POSITION]
+        self.assertEqual(position2, self.path[ECART_POSITION],
                          "Erreur dans la position du second item.")
 
         # Calcul de la distance entre les deux RoadItem
-        self.assertEqual(dist_position*(ECART_START-1),
+        self.assertEqual(dist_position * (ECART_POSITION - 1),
                          self.road_items[0].distance(position2),
                          "Erreur dans le calcul de la distance")

@@ -30,3 +30,23 @@ class Map():
         Liste des itinéraires
         """
         return self._roadmap
+
+    @property
+    def ax(self):
+        return self._ax
+
+    @property
+    def xmin(self):
+        return self.ax.get_xlim()[0]
+
+    @property
+    def xmax(self):
+        return self.ax.get_xlim()[1]
+
+    @property
+    def ymin(self):
+        return self.ax.get_ylim()[0]
+
+    @property
+    def ymax(self):
+        return self.ax.get_ylim()[1]
