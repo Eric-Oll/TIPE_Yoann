@@ -6,6 +6,7 @@ Ce module contient
 import logging
 import pandas as pd
 from parameters import FLAG_REPORT
+from road_objects.road_item import RoadItem
 
 MAX_FRAMES = 10000   # Nombre maximum d'étape du scénario
 
@@ -14,31 +15,55 @@ class Scenario:
     Calcule la position des véhicules avant l'animation
 
     """
-    def __init__(self, traffic: list):
+    def __init__(self, traffic: list, axe, artists):
+        self._ax = axe              # Axes de matplotlib pour l'affichage
         self._traffic = traffic     # Liste des véhicules
         self._frames = list()       # liste des coordonnées pour le traffic pour une étape
-        # self.create_frames()
+
+        # Rapport de données
+        self.report = pd.DataFrame(columns=['frame', 'parameter']+[vehicule.name for vehicule in self._traffic])
+
+        # Obsolète  : self.create_frames()
+
+        self._artists = artists
+        # for color in CATEG_COLORS:
+        #     self.points_list.extend(ax.plot([], [], color=color, ls="none", marker="o"))
+        # text = ax.text(-20,2,"<texte>" )
+        # self.points_list.append(text)
 
     def __len__(self):
-        return len(self.frame)
+        return len(self.frames)
+
+    @property
+    def artists(self):
+        return self._artists
+
+    @property
+    def frames(self):
+        return self._frames
+
 
     def __call__(self, frame, *args, **kwargs):
+        """
+                Fonction appelé pour l'affichage des Frames
+        """
         print(f"{frame}", end="..")
+        logging.debug(f"Points_list at #0 : {args}")
 
         # Mise à jour de la vitesse des véhicule
         for vehicule in self._traffic:
             if vehicule.is_running:
-                logging.log(0, f"Frame #{frame} : Update Speed for {vehicule.name} ...")
+                # logging.log(0, f"Frame #{frame} : Update Speed for {vehicule.name} ...")
                 list_distance = []
                 for item in [item for item in vehicule.Get_Items() if item.is_running and vehicule != item]:
                     d = vehicule.distance(item.next_position)
-                    logging.debug(
-                        f"Frame #{frame} : compare with {item.name} / distance={d} (position={item.next_position}")
+                    # logging.debug(
+                    #     f"Frame #{frame} : compare with {item.name} / distance={d} (position={item.next_position}")
                     if d is not None:
                         list_distance.append(d)
-                logging.log(0, f"Frame #{frame} : List of distances = {list_distance}")
-                logging.log(0,
-                            f"Frame #{frame} : Update Speed for {vehicule.name} : distance with other {list_distance}")
+                # logging.log(0, f"Frame #{frame} : List of distances = {list_distance}")
+                # logging.log(0,
+                #             f"Frame #{frame} : Update Speed for {vehicule.name} : distance with other {list_distance}")
                 if len(list_distance) > 0:
                     vehicule.update_speed(min(list_distance))
                 else:
@@ -47,18 +72,18 @@ class Scenario:
         # Collecte des données de reporting
         if FLAG_REPORT:
             # Statut
-            report = report.append(dict(zip(report.columns,
+            self.report = self.report.append(dict(zip(report.columns,
                                             [frame, 'running'] + [vehicule.is_running for vehicule in
                                                                       self._traffic])),
                                    ignore_index=True)
 
             # Vitesse
-            report = report.append(dict(zip(report.columns,
+            self.report = self.report.append(dict(zip(report.columns,
                                             [frame, 'speed'] + [vehicule.speed for vehicule in self._traffic])),
                                    ignore_index=True)
 
             # Position
-            report = report.append(dict(zip(report.columns,
+            self.report = self.report.append(dict(zip(report.columns,
                                             [frame, 'position'] + [(vehicule.position.x, vehicule.position.y)
                                                                        if vehicule.position else None
                                                                        for vehicule in self._traffic])),
@@ -66,20 +91,32 @@ class Scenario:
 
         # ... Fin collecte reporting
 
-        self.add_frame({'position' :[(vehicule.get_position(frame), vehicule.category) for vehicule in self._traffic],
-                        'state': [(vehicule.name, vehicule.is_running) for vehicule in self._traffic],
-                        })
+        # self.artists.clear()
+        # for item in RoadItem.Get_Items():
+        #     item.forward(frame)
+        #     if item.is_running:
+        #         self.artists.extend(item.get_plot(ax=self._ax))
 
-    @property
-    def frame(self):
-        return self._frames
+        # self.artists = [item for item in self.artists if item is not None]
+        logging.debug(f"""Frame #{frame} : Liste des artists -> {repr(self.artists)}""")
+        logging.debug(f"""Frame #{frame} : Liste des points_list -> {repr(args)}""")
+
+
+        # return [item for item in self.artists if item is not None]
+        return args if not None else self.artists
 
     def get_sequence(self):
         num_frame = 0
         while not all([vehicule.is_ended for vehicule in self._traffic]) and num_frame < MAX_FRAMES:
+            logging.debug(f"Scenario.get_sequence : Nouveau n° de frame : {num_frame}")
             yield num_frame
             num_frame += 1
         print("End of movie.")
+
+        # Génération du fichier de réporting
+        if FLAG_REPORT:
+            report.to_csv('./report_simulation.csv', sep=';', index=None)
+
 
 
     def add_frame(self, value: list) -> None:
@@ -167,8 +204,8 @@ class Scenario:
         :return: ([x0, ...xn], [y0, ..., yn])
         """
         return (
-            [position.x for position, categ in self.frame[num_frame]['position'] if categ==category or category is None],
-            [position.y for position, categ in self.frame[num_frame]['position'] if categ==category or category is None]
+            [position.x for position, categ in self.frames[num_frame] if categ == category or category is None],
+            [position.y for position, categ in self.frames[num_frame] if categ == category or category is None]
         )
 
     def get_state(self, num_frame:int)->list:

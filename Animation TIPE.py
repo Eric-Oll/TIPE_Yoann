@@ -5,6 +5,7 @@ Module principale pour l'animation
 import logging
 
 from parameters import * # Chargement des paramètres de simulation
+from road_objects.road_item import RoadItem
 from roadmaps.linear_road import LinearRoad
 from scenario import Scenario
 
@@ -16,7 +17,7 @@ from road_objects.vehicule import Vehicule
 from roadmaps.traffic_circle import TrafficCircle
 
 logging.BASIC_FORMAT = '%(levelname)s:%(message)s'
-logging.basicConfig(level=logging.INFO,
+logging.basicConfig(level=logging.DEBUG,
                     # filemode='w', filename='./trace.log'
                     )
 
@@ -26,14 +27,15 @@ logging.basicConfig(level=logging.INFO,
 # a) Création de la figure et paramétrages
 fig, ax = plt.subplots()
 ax.margins(0,0)
-
+plt.axis("equal")
+ax.plot([1,2],[1,1], 'g-')
 
 # Création de la carte
 # simulation_map = TrafficCircle(ax)
 simulation_map = LinearRoad(ax)
 
 # Création de la liste de véhicules
-traffic = [Vehicule(path=simulation_map.roadmap[rd.randint(0, len(simulation_map.roadmap) - 1)])
+traffic = [Vehicule(axe=ax, path=simulation_map.roadmap[rd.randint(0, len(simulation_map.roadmap) - 1)])
            for x in range(NB_VEHICULE)]
 
 
@@ -43,14 +45,15 @@ point, = ax.plot([], [], ls="none", marker="o")
 
 
 points_list = []
-for color in CATEG_COLORS:
-    points_list.extend(ax.plot([],[], color=color, ls="none", marker="o"))
+# for color in CATEG_COLORS:
+#     points_list.extend(ax.plot([],[], color=color, ls="none", marker="o"))
+for item in traffic:
+    # for line in item.get_components():
+    #     ax.add_line(line)
+    points_list.extend(item.get_components())
 # text = ax.text(-20,2,"<texte>" )
 # points_list.append(text)
 
-# Gestion des limites de la fenêtre
-# ax.set_xlim([-2, 2])
-# ax.set_ylim([-2, 2])
 
 # Création de la fonction qui sera appelée à chaque nouvelle image de l'animation
 def animate(k):
@@ -82,20 +85,19 @@ for i, vehicule in enumerate(traffic): # Pour chaque véhicule on choisit une he
     vehicule.speed = [1,2,3,4][rd.randint(0,3)]
 
 # Création du scénrio
-movie = Scenario(traffic)
+movie = Scenario(traffic, ax, points_list)
 
-for art in simulation_map.landscape():
-    art
+simulation_map.landscape()
 
 ani = animation.FuncAnimation(fig=fig,
-                              func=animate,
+                              func=movie,
+                              fargs=points_list,
                               frames=movie.get_sequence(),
                               interval=FRAMES_INTERVAL,
                               # init_func=simulation_map.landscape,
                               blit=True,
-                              repeat=True)
-
-plt.axis("equal")
+                              repeat=False)
+plt.show()
 
 # ani.save('./video_TIPE.mp4')
-plt.show()
+

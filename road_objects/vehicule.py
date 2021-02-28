@@ -10,7 +10,7 @@ import logging
 
 from road_objects.road_item import RoadItem, DISTANCE
 from parameters import MAX_SPEED, MAX_SPEED_UP, MAX_SPEED_DOWN, MIN_DISTANCE, SPEED_START, MAX_SPEED_DOWN_FUNC, \
-    MAX_SPEED_UP_FUNC
+    MAX_SPEED_UP_FUNC, CATEG_COLORS
 
 
 class Vehicule(RoadItem):
@@ -27,8 +27,8 @@ class Vehicule(RoadItem):
         """
         return [vehicule for vehicule in cls.Get_Items if isinstance(vehicule, Vehicule)]
 
-    def __init__(self, path=None, name=None):
-        super(Vehicule, self).__init__(path=path, name=name)
+    def __init__(self, axe, path=None, name=None):
+        super(Vehicule, self).__init__(axe=axe, path=path, name=name)
         if name is None: self._name = f"Vehicle_{self.id}"
         self._init_time = 0
         self._current_speed = SPEED_START # On démarre avec la vitesse maximale
@@ -46,7 +46,7 @@ class Vehicule(RoadItem):
 
     @speed.setter
     def speed(self, value):
-        logging.debug(f"Vehicule {self.name} : change speed from {self.speed} to {value}")
+        # logging.debug(f"Vehicule {self.name} : change speed from {self.speed} to {value}")
         self._current_speed = value
 
     @property
@@ -58,7 +58,7 @@ class Vehicule(RoadItem):
         return self.path[min(self.index + int(self.delta_time*self.speed), self.length-1)]
 
     def forward(self, new_time):
-        logging.debug(repr(self)+f".forward : ended={self.is_ended}")
+        # logging.debug(repr(self)+f".forward : ended={self.is_ended}")
         if not self.is_ended:
             # logging.debug(f"... new time = {new_time}")
             # logging.debug(f"... current time = {self.current_time}")
@@ -88,3 +88,15 @@ class Vehicule(RoadItem):
                              self.speed + self.speed * MAX_SPEED_UP      # vitesse d'accélération maximal
                          )
 
+    def get_plot(self, ax, new_time=None):
+        """
+        Retourne les éléménts graphique à afficher
+        """
+        if new_time is not None:
+            self.forward(new_time)
+
+        if self.position:
+            self["Point"].set_data([self.position.x], [self.position.y])
+            self["Point"].set_color(CATEG_COLORS[self.category])
+
+        return self.get_components() if self.position else []

@@ -27,6 +27,7 @@ class LinearRoad(Map):
         self._ax.get_figure().set_size_inches(20,6)
         self._ax.set_xlim(0, 40)
         self._ax.set_ylim(-2, 2)
+        self._artists = None
 
     def init_road(self):
         x_min, x_max = self._ax.get_xlim()
@@ -41,7 +42,10 @@ class LinearRoad(Map):
 
     def landscape(self):
         x_min, x_max = self._ax.get_xlim()
-        artists = []
-        artists.extend(self._ax.plot([x_min, x_max], [1, 1], 'b'))
-        artists.extend(self._ax.plot([x_min, x_max], [-1, -1], 'b'))
-        return artists
+        if self._artists:
+            return self._artists
+        else:
+            self._artists = []
+            self._artists.extend(self._ax.plot([x_min, x_max], [1, 1], 'b'))
+            self._artists.extend(self._ax.plot([x_min, x_max], [-1, -1], 'b'))
+            return self._artists

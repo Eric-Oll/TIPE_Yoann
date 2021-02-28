@@ -13,13 +13,13 @@ Versionning :
 """
 import logging
 
-from parameters import DISTANCE
+from parameters import DISTANCE, CATEG_COLORS
+from road_objects.graphical_item import GraphicalItem
 from roadmaps.path import Path
 from roadmaps.position import NONE_POSITION, Position
 
 
-
-class RoadItem:
+class RoadItem(GraphicalItem):
     """
     Classe de base pour les objets de la route :
     - Véhicule
@@ -72,7 +72,8 @@ class RoadItem:
         """
         return cls._Item_list
 
-    def __init__(self, path=None, roads=None, name=None):
+    def __init__(self, axe, path=None, roads=None, name=None):
+        super(RoadItem, self).__init__(axe)
         self._id = self._GetId()
         self._name = name if name else f"{__class__.__name__}_{self.id}"
         """
@@ -84,6 +85,8 @@ class RoadItem:
         self._delta_time = 0
         self.Add_item(self)
         self._current_position_idx = 0
+
+        self.init_graphic()
 
         # Itinéraire à prendre par l'objet RoadItem
         if isinstance(path, Path):
@@ -128,6 +131,12 @@ class RoadItem:
             return False
         else:
             return other.position in self.path[self._current_position_idx:]
+
+    def init_graphic(self):
+        """
+        Initialise la représentation graphique
+        """
+        self.add_plot([0], [0], 'b', name="Point", label=self.name)
 
     @property
     def current_time(self):
@@ -207,6 +216,18 @@ class RoadItem:
         self._init_time = init_time
         self.current_time = 0
         self.index = -init_time
+
+    def get_plot(self, ax, new_time=None):
+        """
+        Retourne les éléménts graphique à afficher
+        """
+        if new_time is not None:
+            self.forward(new_time)
+
+        if self.position:
+            self["Point"].set_data([self.position.x], [self.position.y])
+
+        return self.get_components() if self.position else []
 
     def get_position(self, new_time):
         """

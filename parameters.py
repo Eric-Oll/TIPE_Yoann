@@ -8,9 +8,9 @@ FLAG_REPORT = False      # Indicateur de création d'un report de données
 
 FRAMES_INTERVAL = 20    # Interval de temps entre 2 frames (ms)
 
-NB_VEHICULE = 50       # Nombre de véhicules dans la simulation
+NB_VEHICULE = 10       # Nombre de véhicules dans la simulation
 MIN_TIME = 30           # Temps minimum entre les véhicules
-MAX_DEPARTURE = 3000    # Heure maximum pour le départ des véhicules
+MAX_DEPARTURE = 300    # Heure maximum pour le départ des véhicules
 
 # Liste des couleurs par catégorie de vitesse
 CATEG_COLORS = \
