@@ -10,7 +10,10 @@ Create date : 14/02/2021
 ------------------------------------------------------------------------------------------------------------------------
 Versionning :
 0.1 : Initial version
+0.2 ; Ajout de la notion de franchissable (attribut 'passable')
+
 """
+__version__ = 0.2
 import logging
 
 from parameters import DISTANCE
@@ -72,18 +75,23 @@ class RoadItem:
         """
         return cls._Item_list
 
-    def __init__(self, path=None, roads=None, name=None):
+    def __init__(self, path=None, roads=None, name=None, **kwargs):
+        """
+        Initialiser l'objet RoadItem
+        """
         self._id = self._GetId()
+        self.Add_item(self)
+
         self._name = name if name else f"{__class__.__name__}_{self.id}"
         """
         Le "f"blablabla{nomdelavariable}"blablabla" est un raccourci pour :
         ""blablabla{}blablabla".format(nomdelavariable)" 
         """
         logging.debug(f"Nouvel item de la classe {__class__.__name__} : {self.name}")
-        self._current_time = 0
+        self._current_time = kwargs.get('current_time', 0)
         self._delta_time = 0
-        self.Add_item(self)
-        self._current_position_idx = 0
+        self._current_position_idx = kwargs.get('index', 0)
+        self._passable = kwargs.get('passable', False)
 
         # Itinéraire à prendre par l'objet RoadItem
         if isinstance(path, Path):
@@ -92,14 +100,6 @@ class RoadItem:
             self.path = Path(roads)
         else:
             self.path = Path()
-
-    @property
-    def id(self):
-        return self._id
-
-    @property
-    def name(self):
-        return self._name
 
     def __eq__(self, other):
         """
@@ -130,6 +130,14 @@ class RoadItem:
             return other.position in self.path[self._current_position_idx:]
 
     @property
+    def id(self):
+        return self._id
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
     def current_time(self):
         return self._current_time
 
@@ -153,6 +161,23 @@ class RoadItem:
         Affecte un itinéraire au véhicule
         """
         self._path = path
+
+    @property
+    def passable(self):
+        """Retour le statut de franchissement"""
+        return self._passable
+
+    def set_passable(self, mode=True):
+        """
+        Change le statut de franchissement:
+        - True : rend RoadItem franchissable (par défaut)
+        - False : rend RoadItem infranchissable
+        """
+        self._passable = mode
+
+    def set_impassable(self):
+        """Rend RoadItem infranchissable"""
+        self.set_passable(False)
 
     @property
     def remain_path(self):

@@ -10,7 +10,11 @@ Create date : 14/02/2021
 ------------------------------------------------------------------------------------------------------------------------
 Versionning :
 0.1 : Initial version
+0.2 :
+- Ajout de la méthode 'append_position' permettant d'ajouter une position à un chemin
 """
+__version__ = 0.2
+
 from roadmaps.position import Position
 from roadmaps.road import Road
 
@@ -60,3 +64,6 @@ class Path():
 
     def index(self, position:Position)->int:
         return self._path.index(position)
+
+    def append_position(self, position:Position):
+        self._path.append(position)

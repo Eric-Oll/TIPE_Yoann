@@ -5,13 +5,13 @@ Ce module regroupe la liste des paramètres de simulation
 import numpy as np
 
 FLAG_REPORT = False      # Indicateur de création d'un report de données
-SHOW_ROADS = True        # Indicateur de visualisation des routes
+SHOW_ROADS = False        # Indicateur de visualisation des routes
 
 FRAMES_INTERVAL = 20    # Interval de temps entre 2 frames (ms)
 
-NB_VEHICULE = 10       # Nombre de véhicules dans la simulation
+NB_VEHICULE = 20       # Nombre de véhicules dans la simulation
 MIN_TIME = 30           # Temps minimum entre les véhicules
-MAX_DEPARTURE = 300    # Heure maximum pour le départ des véhicules
+MAX_DEPARTURE = 600    # Heure maximum pour le départ des véhicules
 
 # Liste des couleurs par catégorie de vitesse
 CATEG_COLORS = \

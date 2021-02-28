@@ -17,12 +17,17 @@ class Map():
     def __init__(self, axe):
         self._ax = axe
         self._roadmap = None
+        self._roaditems = list()
 
     def landscape(self):
         """
         Fond de carte
         """
         raise NotImplemented
+
+    @property
+    def road_items(self):
+        return self._roaditems
 
     @property
     def roadmap(self):
