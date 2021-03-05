@@ -81,10 +81,6 @@ class Scenario:
                 else:
                     vehicule.update_speed()
 
-            arts = list()
-            for item in RoadItem.Get_Items():
-                arts.extend(item.get_plot(frame))
-
         # Collecte des données de reporting
         if FLAG_REPORT:
             # Statut
@@ -117,7 +113,12 @@ class Scenario:
         logging.debug(f"""Frame #{frame} : Liste des artists -> {repr(self.artists)}""")
         logging.debug(f"""Frame #{frame} : Liste des points_list -> {repr(args)}""")
 
-        arts.append(self.text)
+        arts = list()
+        for item in RoadItem.Get_Items():
+            arts.extend(item.get_plot(frame))
+
+        arts.append(self.text) # TODO à supprimer à la fin des tests
+
         return arts
         # return chain([self.text], *[item.get_plot() for item in RoadItem.Get_Items() if item.is_running])
         # return [item for item in self.artists if item is not None]
