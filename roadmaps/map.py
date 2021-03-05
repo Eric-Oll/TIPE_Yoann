@@ -17,6 +17,7 @@ class Map():
     def __init__(self, axe):
         self._ax = axe
         self._roadmap = None
+        self._roaditems = list()
 
     def landscape(self):
         """
@@ -25,8 +26,32 @@ class Map():
         raise NotImplemented
 
     @property
+    def road_items(self):
+        return self._roaditems
+
+    @property
     def roadmap(self):
         """
         Liste des itinéraires
         """
         return self._roadmap
+
+    @property
+    def ax(self):
+        return self._ax
+
+    @property
+    def xmin(self):
+        return self.ax.get_xlim()[0]
+
+    @property
+    def xmax(self):
+        return self.ax.get_xlim()[1]
+
+    @property
+    def ymin(self):
+        return self.ax.get_ylim()[0]
+
+    @property
+    def ymax(self):
+        return self.ax.get_ylim()[1]

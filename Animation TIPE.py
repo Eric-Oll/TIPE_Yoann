@@ -7,6 +7,7 @@ import logging
 from parameters import * # Chargement des paramètres de simulation
 from road_objects.road_item import RoadItem
 from roadmaps.linear_road import LinearRoad
+from roadmaps.linear_road_with_traffic_light import LinearRoadWithTrafficLight
 from scenario import Scenario
 
 import matplotlib.pyplot as plt
@@ -17,7 +18,7 @@ from road_objects.vehicule import Vehicule
 from roadmaps.traffic_circle import TrafficCircle
 
 logging.BASIC_FORMAT = '%(levelname)s:%(message)s'
-logging.basicConfig(level=logging.DEBUG,
+logging.basicConfig(level=logging.INFO,
                     # filemode='w', filename='./trace.log'
                     )
 
@@ -28,11 +29,19 @@ logging.basicConfig(level=logging.DEBUG,
 fig, ax = plt.subplots()
 ax.margins(0,0)
 plt.axis("equal")
-ax.plot([1,2],[1,1], 'g-')
 
 # Création de la carte
-# simulation_map = TrafficCircle(ax)
-simulation_map = LinearRoad(ax)
+simulation_map = TrafficCircle(ax)
+# simulation_map = LinearRoad(ax)
+# simulation_map = LinearRoadWithTrafficLight(ax)
+
+if SHOW_ROADS:
+    for roadmap in simulation_map.roadmap:
+        ax.plot(
+            [pos.x for pos in roadmap],
+            [pos.y for pos in roadmap],
+            color='lightgray', linestyle='--'
+        )
 
 # Création de la liste de véhicules
 traffic = [Vehicule(axe=ax, path=simulation_map.roadmap[rd.randint(0, len(simulation_map.roadmap) - 1)])

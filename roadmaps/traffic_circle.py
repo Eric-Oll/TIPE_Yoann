@@ -39,24 +39,24 @@ class TrafficCircle(Map):
         # -----------------------------
         entree0 = Road(
             x_interval=(r/7,r/7),
-            y_interval=(-42,-rtraj),
+            y_interval=(self.ymin,-rtraj),
             path_functions=(lambda t: t, lambda t: t)
             )
 
         entree1 = Road(
-            x_interval=(42,rtraj),
+            x_interval=(self.xmax,rtraj),
             y_interval=(r/24,r/24),
             path_functions=(lambda t: t, lambda t: t)
             )
 
         entree2 = Road(
             x_interval=(-r/7,-r/7),
-            y_interval=(42,rtraj),
+            y_interval=(self.ymax,rtraj),
             path_functions=(lambda t: t, lambda t: t)
             )
 
         entree3 = Road(
-            x_interval=(-42,-rtraj),
+            x_interval=(self.xmin,-rtraj),
             y_interval=(-r/24,-r/24),
             path_functions=(lambda t: t, lambda t: t)
             )
@@ -67,52 +67,52 @@ class TrafficCircle(Map):
             x_interval=(np.arccos((r/7)/rtraj),0),
             y_interval=(-np.pi/2,np.arcsin(-(r/24)/rtraj)),
             path_functions=(lambda t: rtraj*np.cos(t), lambda t: rtraj*np.sin(t)),
-            step=500
+            # step=500
             )
 
         section1 = Road(
             x_interval=(0,np.arccos((r/7)/rtraj)),
             y_interval=(np.arcsin((r/24)/rtraj),np.pi/2),
             path_functions=(lambda t: rtraj*np.cos(t), lambda t: rtraj*np.sin(t)),
-            step=500
+            # step=500
             )
 
         section2 = Road(
             x_interval=(np.arccos(-(r/7)/rtraj),np.pi),
             y_interval=(np.pi/2,np.arcsin((r/24)/rtraj)),
             path_functions=(lambda t: rtraj*np.cos(t), lambda t: rtraj*np.sin(t)),
-            step=500
+            # step=500
             )
 
         section3 = Road(
             x_interval=(np.pi,np.arccos(-(r/7)/rtraj)),
             y_interval=(np.arcsin(-(r/24)/rtraj),-np.pi/2),
             path_functions=(lambda t: rtraj*np.cos(t), lambda t: rtraj*np.sin(t)),
-            step=500
+            # step=500
             )
 
         # ... Les sorties de rond-point
         # ------------------------------
         sortie0 = Road(
             x_interval=(-r/7,-r/7),
-            y_interval=(-rtraj,-42),
+            y_interval=(-rtraj,self.ymin),
             path_functions=(lambda t: t, lambda t: t)
             )
 
         sortie1 = Road(
-            x_interval=(rtraj, 42),
+            x_interval=(rtraj, self.xmax),
             y_interval=(-r/24,-r/24),
             path_functions=(lambda t: t, lambda t: t)
             )
 
         sortie2 = Road(
             x_interval=(r/7,r/7),
-            y_interval=(rtraj,42),
+            y_interval=(rtraj,self.ymax),
             path_functions=(lambda t: t, lambda t: t)
             )
 
         sortie3 = Road(
-            x_interval=(-rtraj, -42),
+            x_interval=(-rtraj, self.xmin),
             y_interval=(r/24,r/24),
             path_functions=(lambda t: t, lambda t: t)
             )
@@ -123,28 +123,28 @@ class TrafficCircle(Map):
             x_interval=(np.arccos(-(r/7)/rtraj),np.arccos((r/7)/rtraj)),
             y_interval=(-np.pi/2,-np.pi/2),
             path_functions=(lambda t: rtraj*np.cos(t),lambda t: rtraj*np.sin(t)),
-            step=125
+            # step=125
             )
 
         jonction1 = Road(
             x_interval=(0,0),
             y_interval=(np.arcsin(-(r/24)/rtraj),np.arcsin((r/24)/rtraj)),
             path_functions=(lambda t: rtraj*np.cos(t),lambda t: rtraj*np.sin(t)),
-            step=50
+            # step=50
             )
 
         jonction2 = Road(
             x_interval=(np.arccos((r/7)/rtraj),np.arccos(-(r/7)/rtraj)),
             y_interval=(np.pi/2,np.pi/2),
             path_functions=(lambda t: rtraj*np.cos(t),lambda t: rtraj*np.sin(t)),
-            step=125
+            # step=125
             )
 
         jonction3 = Road(
             x_interval=(np.pi,np.pi),
             y_interval=(np.arcsin((r/24)/rtraj),np.arcsin(-(r/24)/rtraj)),
             path_functions=(lambda t: rtraj*np.cos(t),lambda t: rtraj*np.sin(t)),
-            step=50
+            # step=50
             )
 
         # Itinéraires possibles

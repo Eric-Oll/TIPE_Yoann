@@ -7,6 +7,7 @@ import logging
 import pandas as pd
 from parameters import FLAG_REPORT
 from road_objects.road_item import RoadItem
+from road_objects.traffic_light import TrafficLight
 
 MAX_FRAMES = 10000   # Nombre maximum d'étape du scénario
 
@@ -50,12 +51,16 @@ class Scenario:
         print(f"{frame}", end="..")
         logging.debug(f"Points_list at #0 : {args}")
 
+        if frame % 100 == 0:
+            for trafficlight in [item for item in RoadItem.Get_Items() if isinstance(item, TrafficLight)]:
+                trafficlight.set_passable(not trafficlight.passable)
+
         # Mise à jour de la vitesse des véhicule
         for vehicule in self._traffic:
             if vehicule.is_running:
                 # logging.log(0, f"Frame #{frame} : Update Speed for {vehicule.name} ...")
                 list_distance = []
-                for item in [item for item in vehicule.Get_Items() if item.is_running and vehicule != item]:
+                for item in [item for item in vehicule.Get_Items() if item.is_running and vehicule != item and not item.passable]:
                     d = vehicule.distance(item.next_position)
                     # logging.debug(
                     #     f"Frame #{frame} : compare with {item.name} / distance={d} (position={item.next_position}")
@@ -101,9 +106,12 @@ class Scenario:
         logging.debug(f"""Frame #{frame} : Liste des artists -> {repr(self.artists)}""")
         logging.debug(f"""Frame #{frame} : Liste des points_list -> {repr(args)}""")
 
-
         # return [item for item in self.artists if item is not None]
         return args if not None else self.artists
+
+    @property
+    def frame(self):
+        return self._frames
 
     def get_sequence(self):
         num_frame = 0

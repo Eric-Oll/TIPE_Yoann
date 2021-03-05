@@ -10,7 +10,10 @@ Create date : 14/02/2021
 ------------------------------------------------------------------------------------------------------------------------
 Versionning :
 0.1 : Initial version
+0.2 ; Ajout de la notion de franchissable (attribut 'passable')
+
 """
+__version__ = 0.2
 import logging
 
 from parameters import DISTANCE, CATEG_COLORS
@@ -73,18 +76,23 @@ class RoadItem(GraphicalItem):
         return cls._Item_list
 
     def __init__(self, axe, path=None, roads=None, name=None):
+        """
+        Initialiser l'objet RoadItem
+        """
         super(RoadItem, self).__init__(axe)
         self._id = self._GetId()
+        self.Add_item(self)
+
         self._name = name if name else f"{__class__.__name__}_{self.id}"
         """
         Le "f"blablabla{nomdelavariable}"blablabla" est un raccourci pour :
         ""blablabla{}blablabla".format(nomdelavariable)" 
         """
         logging.debug(f"Nouvel item de la classe {__class__.__name__} : {self.name}")
-        self._current_time = 0
+        self._current_time = kwargs.get('current_time', 0)
         self._delta_time = 0
-        self.Add_item(self)
-        self._current_position_idx = 0
+        self._current_position_idx = kwargs.get('index', 0)
+        self._passable = kwargs.get('passable', False)
 
         self.init_graphic()
 
@@ -162,6 +170,23 @@ class RoadItem(GraphicalItem):
         Affecte un itinéraire au véhicule
         """
         self._path = path
+
+    @property
+    def passable(self):
+        """Retour le statut de franchissement"""
+        return self._passable
+
+    def set_passable(self, mode=True):
+        """
+        Change le statut de franchissement:
+        - True : rend RoadItem franchissable (par défaut)
+        - False : rend RoadItem infranchissable
+        """
+        self._passable = mode
+
+    def set_impassable(self):
+        """Rend RoadItem infranchissable"""
+        self.set_passable(False)
 
     @property
     def remain_path(self):
