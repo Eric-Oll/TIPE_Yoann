@@ -32,9 +32,9 @@ ax.margins(0,0)
 plt.axis("equal")
 
 # Création de la carte
-# simulation_map = TrafficCircle(ax)
+simulation_map = TrafficCircle(ax)
 # simulation_map = LinearRoad(ax)
-simulation_map = LinearRoadWithTrafficLight(ax)
+# simulation_map = LinearRoadWithTrafficLight(ax)
 
 if SHOW_ROADS:
     for roadmap in simulation_map.roadmap:
