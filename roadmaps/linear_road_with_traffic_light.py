@@ -18,6 +18,7 @@ from road_objects.traffic_light import TrafficLight
 from roadmaps.map import Map
 import numpy as np
 from roadmaps.path import Path
+from roadmaps.position import Position
 from roadmaps.road import Road
 
 class LinearRoadWithTrafficLight(Map):
@@ -42,9 +43,14 @@ class LinearRoadWithTrafficLight(Map):
         ]
 
         # Ajout d'un feu à mi-chemin
+        real_position = self.roadmap[0][len(self.roadmap[0])//2]
         self.road_items.append(
             TrafficLight(
-                position=self.roadmap[0][len(self.roadmap[0])//2]))
+                axe=self.ax,
+                position=real_position,
+                graphic_position=Position(real_position.x, real_position.y-1.1)
+            ),
+        )
 
     def landscape(self):
         return [

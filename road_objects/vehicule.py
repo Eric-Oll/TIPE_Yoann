@@ -88,7 +88,7 @@ class Vehicule(RoadItem):
                              self.speed + self.speed * MAX_SPEED_UP      # vitesse d'accélération maximal
                          )
 
-    def get_plot(self, ax, new_time=None):
+    def get_plot(self, new_time=None):
         """
         Retourne les éléménts graphique à afficher
         """

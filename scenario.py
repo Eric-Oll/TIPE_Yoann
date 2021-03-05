@@ -5,6 +5,7 @@ Ce module contient
 """
 import logging
 import pandas as pd
+from itertools import chain
 from parameters import FLAG_REPORT
 from road_objects.road_item import RoadItem
 from road_objects.traffic_light import TrafficLight
@@ -16,7 +17,7 @@ class Scenario:
     Calcule la position des véhicules avant l'animation
 
     """
-    def __init__(self, traffic: list, axe, artists):
+    def __init__(self, traffic: list, axe):
         self._ax = axe              # Axes de matplotlib pour l'affichage
         self._traffic = traffic     # Liste des véhicules
         self._frames = list()       # liste des coordonnées pour le traffic pour une étape
@@ -26,7 +27,12 @@ class Scenario:
 
         # Obsolète  : self.create_frames()
 
-        self._artists = artists
+        self._artists = list()
+        for item in traffic:
+            self._artists.extend(item.get_components())
+
+        self.text = axe.text(0,2,"<texte>" )
+        self._artists.append(self.text)
         # for color in CATEG_COLORS:
         #     self.points_list.extend(ax.plot([], [], color=color, ls="none", marker="o"))
         # text = ax.text(-20,2,"<texte>" )
@@ -49,6 +55,7 @@ class Scenario:
                 Fonction appelé pour l'affichage des Frames
         """
         print(f"{frame}", end="..")
+        self.text.set_text(f"Frame {frame} => Nb vehicle running = {len([v for v in self._traffic if v.is_running])}")
         logging.debug(f"Points_list at #0 : {args}")
 
         if frame % 100 == 0:
@@ -73,6 +80,10 @@ class Scenario:
                     vehicule.update_speed(min(list_distance))
                 else:
                     vehicule.update_speed()
+
+            arts = list()
+            for item in RoadItem.Get_Items():
+                arts.extend(item.get_plot(frame))
 
         # Collecte des données de reporting
         if FLAG_REPORT:
@@ -106,8 +117,11 @@ class Scenario:
         logging.debug(f"""Frame #{frame} : Liste des artists -> {repr(self.artists)}""")
         logging.debug(f"""Frame #{frame} : Liste des points_list -> {repr(args)}""")
 
+        arts.append(self.text)
+        return arts
+        # return chain([self.text], *[item.get_plot() for item in RoadItem.Get_Items() if item.is_running])
         # return [item for item in self.artists if item is not None]
-        return args if not None else self.artists
+        # return args if not None else self.artists
 
     @property
     def frame(self):

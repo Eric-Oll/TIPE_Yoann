@@ -75,7 +75,7 @@ class RoadItem(GraphicalItem):
         """
         return cls._Item_list
 
-    def __init__(self, axe, path=None, roads=None, name=None):
+    def __init__(self, axe, path=None, roads=None, name=None, **kwargs):
         """
         Initialiser l'objet RoadItem
         """
@@ -90,6 +90,7 @@ class RoadItem(GraphicalItem):
         """
         logging.debug(f"Nouvel item de la classe {__class__.__name__} : {self.name}")
         self._current_time = kwargs.get('current_time', 0)
+        self._init_time = kwargs.get('init_time', 0)
         self._delta_time = 0
         self._current_position_idx = kwargs.get('index', 0)
         self._passable = kwargs.get('passable', False)
@@ -144,7 +145,7 @@ class RoadItem(GraphicalItem):
         """
         Initialise la représentation graphique
         """
-        self.add_plot([0], [0], 'b', name="Point", label=self.name)
+        self.add_plot([], [], 'b', name="Point", label=self.name, marker='o')
 
     @property
     def current_time(self):
@@ -242,7 +243,7 @@ class RoadItem(GraphicalItem):
         self.current_time = 0
         self.index = -init_time
 
-    def get_plot(self, ax, new_time=None):
+    def get_plot(self, new_time=None):
         """
         Retourne les éléménts graphique à afficher
         """

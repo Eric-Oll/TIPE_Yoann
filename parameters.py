@@ -38,3 +38,7 @@ DISTANCE = lambda pos1, pos2: abs(pos1.x-pos2.x) + abs(pos1.y-pos2.y) # Norme 1
 
 # Distance entre deux positions
 DISTANCE_POSITION = 0.05
+
+# Feu tricolore
+CYCLE_TIME = 200 # Nombre de frame(temps) par cycle
+PASSABLE_TIME = 100 # Nombre de frame (temps) franchissable

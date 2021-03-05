@@ -31,9 +31,9 @@ ax.margins(0,0)
 plt.axis("equal")
 
 # Création de la carte
-simulation_map = TrafficCircle(ax)
+# simulation_map = TrafficCircle(ax)
 # simulation_map = LinearRoad(ax)
-# simulation_map = LinearRoadWithTrafficLight(ax)
+simulation_map = LinearRoadWithTrafficLight(ax)
 
 if SHOW_ROADS:
     for roadmap in simulation_map.roadmap:
@@ -53,37 +53,15 @@ traffic = [Vehicule(axe=ax, path=simulation_map.roadmap[rd.randint(0, len(simula
 point, = ax.plot([], [], ls="none", marker="o")
 
 
-points_list = []
-# for color in CATEG_COLORS:
-#     points_list.extend(ax.plot([],[], color=color, ls="none", marker="o"))
-for item in traffic:
-    # for line in item.get_components():
-    #     ax.add_line(line)
-    points_list.extend(item.get_components())
+# points_list = []
+# # for color in CATEG_COLORS:
+# #     points_list.extend(ax.plot([],[], color=color, ls="none", marker="o"))
+# for item in traffic:
+#     # for line in item.get_components():
+#     #     ax.add_line(line)
+#     points_list.extend(item.get_components())
 # text = ax.text(-20,2,"<texte>" )
 # points_list.append(text)
-
-
-# Création de la fonction qui sera appelée à chaque nouvelle image de l'animation
-def animate(k):
-    # logging.debug(f"Frame {k}")
-
-    # point.set_data(*movie.get_data(k))
-    # return point,
-    movie(k)
-    for categ in range(len(CATEG_COLORS)):
-        x_series, y_series = movie.get_data(k, categ)
-        logging.debug(f"Frame : {k}, Categ.{categ} :")
-        if len(x_series) != 0:
-            # logging.debug(f"... : X={x_series}")
-            # logging.debug(f"... : Y={y_series}")
-            points_list[categ].set_data(x_series, y_series) # Avec couleur en fonction de la vitesse
-            # points_list[5].set_data(x_series, y_series) # Sans changement de couleur
-        else:
-            points_list[categ].set_data([],[])
-            logging.debug(f"... : pas de données")
-        # text.set_text(f"""Frame {k} : {",".join(f"{name}={state}"  for name, state in movie.get_state(k))}""")
-    return points_list
 
 # Génération de l'animation
 departure_time = [x for x in range(0, MAX_DEPARTURE, MIN_TIME)] # On définit les heures de départ possibles
@@ -94,13 +72,13 @@ for i, vehicule in enumerate(traffic): # Pour chaque véhicule on choisit une he
     vehicule.speed = [1,2,3,4][rd.randint(0,3)]
 
 # Création du scénrio
-movie = Scenario(traffic, ax, points_list)
+movie = Scenario(traffic, ax)
 
 simulation_map.landscape()
 
 ani = animation.FuncAnimation(fig=fig,
                               func=movie,
-                              fargs=points_list,
+                              # fargs=points_list,
                               frames=movie.get_sequence(),
                               interval=FRAMES_INTERVAL,
                               # init_func=simulation_map.landscape,
