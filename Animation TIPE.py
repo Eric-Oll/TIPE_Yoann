@@ -18,8 +18,9 @@ from road_objects.vehicule import Vehicule
 from roadmaps.traffic_circle import TrafficCircle
 
 logging.BASIC_FORMAT = '%(levelname)s:%(message)s'
-logging.basicConfig(level=logging.INFO,
-                    # filemode='w', filename='./trace.log'
+logging.basicConfig(level=logging.DEBUG,
+                    filemode='w', filename='./trace.log',
+                    format="%(msg)s"
                     )
 
 # Section 1 : Initialisation

@@ -44,15 +44,13 @@ class TrafficLight(RoadItem):
     def is_running(self):
         return True
 
-    @property
-    def passable(self):
-        return (self.current_time+self._init_time) % CYCLE_TIME <=PASSABLE_TIME
-
     def forward(self, new_time):
         """
         Methode par pdéfaut pour faire avancer un objet dans le temps
         """
         self.current_time = new_time
+
+        self.set_passable((self.current_time+self._init_time) % CYCLE_TIME <=PASSABLE_TIME)
 
         if self.passable:
             self["Signal"].set_color('g')

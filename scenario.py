@@ -25,8 +25,6 @@ class Scenario:
         # Rapport de données
         self.report = pd.DataFrame(columns=['frame', 'parameter']+[vehicule.name for vehicule in self._traffic])
 
-        # Obsolète  : self.create_frames()
-
         self._artists = list()
         for item in traffic:
             self._artists.extend(item.get_components())
@@ -56,28 +54,23 @@ class Scenario:
         """
         print(f"{frame}", end="..")
         self.text.set_text(f"Frame {frame} => Nb vehicle running = {len([v for v in self._traffic if v.is_running])}")
-        logging.debug(f"Points_list at #0 : {args}")
-
-        if frame % 100 == 0:
-            for trafficlight in [item for item in RoadItem.Get_Items() if isinstance(item, TrafficLight)]:
-                trafficlight.set_passable(not trafficlight.passable)
 
         # Mise à jour de la vitesse des véhicule
         for vehicule in self._traffic:
             if vehicule.is_running:
                 # logging.log(0, f"Frame #{frame} : Update Speed for {vehicule.name} ...")
-                list_distance = []
+                list_distance = {}
                 for item in [item for item in vehicule.Get_Items() if item.is_running and vehicule != item and not item.passable]:
                     d = vehicule.distance(item.next_position)
                     # logging.debug(
                     #     f"Frame #{frame} : compare with {item.name} / distance={d} (position={item.next_position}")
                     if d is not None:
-                        list_distance.append(d)
-                # logging.log(0, f"Frame #{frame} : List of distances = {list_distance}")
+                        list_distance[item.name] = d
+                logging.debug(f"Frame #{frame} : List of distances for {vehicule.name} = {list_distance}")
                 # logging.log(0,
                 #             f"Frame #{frame} : Update Speed for {vehicule.name} : distance with other {list_distance}")
                 if len(list_distance) > 0:
-                    vehicule.update_speed(min(list_distance))
+                    vehicule.update_speed(min(list_distance.values()))
                 else:
                     vehicule.update_speed()
 
@@ -103,26 +96,12 @@ class Scenario:
 
         # ... Fin collecte reporting
 
-        # self.artists.clear()
-        # for item in RoadItem.Get_Items():
-        #     item.forward(frame)
-        #     if item.is_running:
-        #         self.artists.extend(item.get_plot(ax=self._ax))
-
-        # self.artists = [item for item in self.artists if item is not None]
-        logging.debug(f"""Frame #{frame} : Liste des artists -> {repr(self.artists)}""")
-        logging.debug(f"""Frame #{frame} : Liste des points_list -> {repr(args)}""")
-
         arts = list()
         for item in RoadItem.Get_Items():
             arts.extend(item.get_plot(frame))
-
         arts.append(self.text) # TODO à supprimer à la fin des tests
-
         return arts
-        # return chain([self.text], *[item.get_plot() for item in RoadItem.Get_Items() if item.is_running])
-        # return [item for item in self.artists if item is not None]
-        # return args if not None else self.artists
+
 
     @property
     def frame(self):
@@ -131,7 +110,7 @@ class Scenario:
     def get_sequence(self):
         num_frame = 0
         while not all([vehicule.is_ended for vehicule in self._traffic]) and num_frame < MAX_FRAMES:
-            logging.debug(f"Scenario.get_sequence : Nouveau n° de frame : {num_frame}")
+            logging.debug(f"\nScenario.get_sequence : Nouveau n° de frame : {num_frame}")
             yield num_frame
             num_frame += 1
         print("End of movie.")

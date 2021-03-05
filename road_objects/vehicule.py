@@ -46,7 +46,8 @@ class Vehicule(RoadItem):
 
     @speed.setter
     def speed(self, value):
-        # logging.debug(f"Vehicule {self.name} : change speed from {self.speed} to {value}")
+        if self._current_speed!= value :
+            logging.debug(f"Vehicule {self.name} : change speed from {self.speed} to {value}")
         self._current_speed = value
 
     @property
@@ -83,10 +84,12 @@ class Vehicule(RoadItem):
                                      )
                                  )
                          )
+            logging.debug(f"{repr(self)} : new speed {self.speed} for distance={distance}.")
         else:
-            self.speed = min(MAX_SPEED,                                  # Vitesse maximal
-                             self.speed + self.speed * MAX_SPEED_UP      # vitesse d'accélération maximal
+            self.speed = min(MAX_SPEED,                                         # Vitesse maximal
+                             MAX_SPEED_UP_FUNC(self.speed, MIN_DISTANCE*100)  # vitesse d'accélération maximal
                          )
+            logging.debug(f"{repr(self)} : new speed without distance")
 
     def get_plot(self, new_time=None):
         """

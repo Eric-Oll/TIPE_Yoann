@@ -183,6 +183,7 @@ class RoadItem(GraphicalItem):
         - True : rend RoadItem franchissable (par défaut)
         - False : rend RoadItem infranchissable
         """
+        logging.debug(f"{repr(self)} : Change 'Passable' from {self._passable} to {mode}")
         self._passable = mode
 
     def set_impassable(self):
