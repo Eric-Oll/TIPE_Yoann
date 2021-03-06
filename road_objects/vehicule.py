@@ -10,7 +10,7 @@ import logging
 
 from road_objects.road_item import RoadItem, DISTANCE
 from parameters import MAX_SPEED, MAX_SPEED_UP, MAX_SPEED_DOWN, MIN_DISTANCE, SPEED_START, MAX_SPEED_DOWN_FUNC, \
-    MAX_SPEED_UP_FUNC, CATEG_COLORS
+    MAX_SPEED_UP_FUNC, CATEG_COLORS, DISTANCE_POSITION
 
 
 class Vehicule(RoadItem):
@@ -74,7 +74,7 @@ class Vehicule(RoadItem):
         """
         if not self.is_running : return
         if distance:
-            ratio = DISTANCE(self.path[0], self.path[1])
+            ratio = DISTANCE_POSITION       #DISTANCE(self.path[0], self.path[1])
             self.speed = min(MAX_SPEED,                                         # Vitesse maximal
                              max(MAX_SPEED_DOWN_FUNC(self.speed, distance),     # vitesse de décélération maximum
                                  min(MAX_SPEED_UP_FUNC(self.speed, distance),   # vitesse d'accélération maximal
