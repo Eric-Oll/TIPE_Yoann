@@ -56,7 +56,14 @@ class Vehicule(RoadItem):
 
     @property
     def next_position(self):
-        return self.path[min(self.index + int(self.delta_time*self.speed), self.length-1)]
+        return self.path[
+            max(0,
+                min(
+                    self.index + int(self.delta_time*self.speed),
+                    self.length-1,
+                    )
+                )
+            ]
 
     def forward(self, new_time):
         # logging.debug(repr(self)+f".forward : ended={self.is_ended}")
