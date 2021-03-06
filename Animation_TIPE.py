@@ -8,6 +8,7 @@ from parameters import * # Chargement des paramètres de simulation
 from road_objects.road_item import RoadItem
 from roadmaps.linear_road import LinearRoad
 from roadmaps.linear_road_with_traffic_light import LinearRoadWithTrafficLight
+from roadmaps.map import Map
 from scenario import Scenario
 
 import matplotlib.pyplot as plt
@@ -23,19 +24,21 @@ logging.basicConfig(level=logging.INFO,
                     format="%(msg)s"
                     )
 
-def run():
+def run(working_map:Map):
     # Section 1 : Initialisation
 
     # 1.2 - Création de la figure et du rond-point
     # a) Création de la figure et paramétrages
     fig, ax = plt.subplots()
+    plt.ion()
     ax.margins(0,0)
-    plt.axis("equal")
+    ax.axis("equal")
 
     # Création de la carte
-    simulation_map = TrafficCircle(ax)
+    # simulation_map = TrafficCircle(ax)
     # simulation_map = LinearRoad(ax)
     # simulation_map = LinearRoadWithTrafficLight(ax)
+    simulation_map = working_map(ax)
 
     if SHOW_ROADS:
         for roadmap in simulation_map.roadmap:
@@ -60,8 +63,10 @@ def run():
     # Création du scénrio
     movie = Scenario(traffic, ax)
 
+    # Affichage du paysage
     simulation_map.landscape()
 
+    # Lancement de l'animation
     ani = animation.FuncAnimation(fig=fig,
                                   func=movie,
                                   frames=movie.get_sequence(),
@@ -71,8 +76,10 @@ def run():
                                   )
 
     #ani.save('./video_TIPE.mp4', fps=30)
-
     plt.show()
 
+    return ani
+
 if __name__ == '__main__':
-    run()
+    run(TrafficCircle)
+

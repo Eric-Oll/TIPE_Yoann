@@ -39,7 +39,7 @@ class LinearRoad(Map):
                 x_interval=(x_min, x_max),
                 y_interval=(0, 0),
                 path_functions=(lambda x: x,lambda y: y),
-                step=500
+                # step=500
             ))
         ]
 

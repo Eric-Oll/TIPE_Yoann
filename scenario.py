@@ -52,7 +52,7 @@ class Scenario:
         """
                 Fonction appelé pour l'affichage des Frames
         """
-        print(f"{frame}", end="..")
+        # print(f"{frame}", end="..")
         self.text.set_text(f"Frame {frame}\n=> Nb vehicle running = {len([v for v in self._traffic if v.is_running])}")
 
         # Mise à jour de la vitesse des véhicule
