@@ -15,8 +15,8 @@ Versionning :
 """
 __version__ = 0.2
 import logging
-
-from parameters import DISTANCE, CATEG_COLORS
+import numpy as np
+from parameters import DISTANCE, CATEG_COLORS, DISTANCE_POSITION, MAX_SPEED
 from road_objects.graphical_item import GraphicalItem
 from roadmaps.path import Path
 from roadmaps.position import NONE_POSITION, Position
@@ -34,6 +34,8 @@ class RoadItem(GraphicalItem):
     """
     _COUNTER = 0
     _Item_list = list()
+    _MAX_POSITION_FORWARD = int(np.ceil(MAX_SPEED/DISTANCE_POSITION))
+    print(f"_MAX_POSITION_FORWARD = {_MAX_POSITION_FORWARD}")
 
     @classmethod
     def _GetId(cls):
@@ -191,10 +193,6 @@ class RoadItem(GraphicalItem):
         self.set_passable(False)
 
     @property
-    def remain_path(self):
-        return self.path[max(0, min(self.index+1, self.length-1)):] if not self.is_ended else []
-
-    @property
     def is_running(self):
         return self.is_started and not self.is_ended
 
@@ -235,6 +233,10 @@ class RoadItem(GraphicalItem):
         for road in roads:
             self._path.add_road(road)
 
+    def remain_path(self, end_index=None):
+        return self.path[max(0, min(self.index+1, self.length-1)):end_index] if not self.is_ended else []
+
+
     def start(self, init_time):
         """
         Définit le moment du départ
@@ -266,19 +268,23 @@ class RoadItem(GraphicalItem):
     def distance(self, position:Position)->float:
         """
         Calcul la distance entre <self> et l'objet <item>
-        distance ::= SUM( DISTANCE(postion_i, position_i+1) ), avec position_i in[self.position, item.position [
 
+        Pré-requis de construction : la distance entre chaque position est constante et vaut parameters.DISTANCE_POSITION
+        distance ::=  (nb positions entre self et position) *
+
+
+        <<<
+        ancien mode de calcul =>
+        distance ::= SUM( DISTANCE(postion_i, position_i+1) ), avec position_i in[self.position, item.position [
         La fonction de calcul de distance entre 2 positions est défini par le fonction DISTANCE
+        >>>
 
         :return:
             - distance(self, item) si <item> a au moins une position commune avec <self>
             - None si pas de position commune
         """
-        if position in self.remain_path:
-            distance_segments = 0
-            for i in range(self._current_position_idx, self.path.index(position) - 1):
-                distance_segments += DISTANCE(self.path[i], self.path[i+1])
-            return distance_segments
+        if position in self.remain_path(self.index+self._MAX_POSITION_FORWARD): #
+            return (self.path.index(position) - self.index)* DISTANCE_POSITION
         else:
             return None
 

@@ -29,7 +29,7 @@ class Scenario:
         for item in traffic:
             self._artists.extend(item.get_components())
 
-        self.text = axe.text(0,2,"<texte>" )
+        self.text = axe.text(axe.get_xlim()[0],axe.get_ylim()[1],"<texte>", ha='left', va='top' )
         self._artists.append(self.text)
         # for color in CATEG_COLORS:
         #     self.points_list.extend(ax.plot([], [], color=color, ls="none", marker="o"))
@@ -53,7 +53,7 @@ class Scenario:
                 Fonction appelé pour l'affichage des Frames
         """
         print(f"{frame}", end="..")
-        self.text.set_text(f"Frame {frame} => Nb vehicle running = {len([v for v in self._traffic if v.is_running])}")
+        self.text.set_text(f"Frame {frame}\n=> Nb vehicle running = {len([v for v in self._traffic if v.is_running])}")
 
         # Mise à jour de la vitesse des véhicule
         for vehicule in self._traffic:
