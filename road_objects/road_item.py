@@ -272,17 +272,16 @@ class RoadItem(GraphicalItem):
         distance ::=  (nb positions entre self et position) *
 
 
-        <<<
-        ancien mode de calcul =>
-        distance ::= SUM( DISTANCE(postion_i, position_i+1) ), avec position_i in[self.position, item.position [
-        La fonction de calcul de distance entre 2 positions est défini par le fonction DISTANCE
+        <<< ancien mode de calcul =>
+            distance ::= SUM( DISTANCE(postion_i, position_i+1) ), avec position_i in[self.position, item.position [
+            La fonction de calcul de distance entre 2 positions est défini par le fonction DISTANCE
         >>>
 
         :return:
             - distance(self, item) si <item> a au moins une position commune avec <self>
             - None si pas de position commune
         """
-        if position in self.remain_path(self.index+self._MAX_POSITION_FORWARD): #
+        if position in self.remain_path(self.index+self._MAX_POSITION_FORWARD):
             return (self.path.index(position) - self.index)* DISTANCE_POSITION
         else:
             return None
