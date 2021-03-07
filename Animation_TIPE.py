@@ -76,7 +76,7 @@ def run(working_map:Map):
                                   )
 
     #ani.save('./video_TIPE.mp4', fps=30)
-    plt.show()
+    plt.show(True)
 
     return ani
 

@@ -119,8 +119,6 @@ class Scenario:
         if FLAG_REPORT:
             report.to_csv('./report_simulation.csv', sep=';', index=None)
 
-
-
     def add_frame(self, value: list) -> None:
         """
         Le ":list" indique le type (ici, le type list) d'une variable en paramètre d'une fonction (ici, la variable

@@ -35,7 +35,6 @@ class RoadItem(GraphicalItem):
     _COUNTER = 0
     _Item_list = list()
     _MAX_POSITION_FORWARD = int(np.ceil(MAX_SPEED/DISTANCE_POSITION))
-    print(f"_MAX_POSITION_FORWARD = {_MAX_POSITION_FORWARD}")
 
     @classmethod
     def _GetId(cls):
