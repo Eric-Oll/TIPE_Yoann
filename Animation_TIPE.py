@@ -25,27 +25,26 @@ logging.basicConfig(level=logging.INFO,
                     )
 
 def run(working_map:Map):
-    # Section 1 : Initialisation
-
-    # 1.2 - Création de la figure et du rond-point
-    # a) Création de la figure et paramétrages
+    """
+    La fonction 'run' lance l'animation sur la Map passé en paramètre
+    :parameters map: Classe Map correspondant à la carte sur laquelle faire l'animation
+    """
+    # Création du contexte graphique
     fig, ax = plt.subplots()
     plt.ion()
     ax.margins(0,0)
     ax.axis("equal")
 
     # Création de la carte
-    # simulation_map = TrafficCircle(ax)
-    # simulation_map = LinearRoad(ax)
-    # simulation_map = LinearRoadWithTrafficLight(ax)
-    simulation_map = working_map(ax)
+    simulation_map = working_map(ax)    # Création de la carte
 
+    # Option d'affage de la route (voie des véhicules)
     if SHOW_ROADS:
         for roadmap in simulation_map.roadmap:
             ax.plot(
                 [pos.x for pos in roadmap],
                 [pos.y for pos in roadmap],
-                color='lightgray', linestyle='--'
+                color='lightgray', linestyle='--'   # Affiche en pointillé gris clair
             )
 
     # Création de la liste de véhicules
@@ -54,13 +53,13 @@ def run(working_map:Map):
 
     # Génération de l'animation
     departure_time = [x for x in range(0, MAX_DEPARTURE, MIN_TIME)] # On définit les heures de départ possibles
-    for i, vehicule in enumerate(traffic): # Pour chaque véhicule on choisit une heure de départ
-        vehicule.start(departure_time.pop(rd.randint(0,len(departure_time)-1))) #... au hasard et jamais la même heure
-        # section_size = int(len(departure_time)/len(traffic))
-        # vehicule.start(departure_time[i*section_size:min((i+1)*section_size, len(departure_time))][rd.randint(0, section_size-1)])
+    for i, vehicule in enumerate(traffic): # Pour chaque véhicule ...
+        # ... on choisit une heure de départ au hasard et jamais la même heure
+        vehicule.start(departure_time.pop(rd.randint(0,len(departure_time)-1)))
+        # ... On choisie au hasard une vitesse initiale de véhicule
         vehicule.speed = [1,2,3,4][rd.randint(0,3)]
 
-    # Création du scénrio
+    # Création du film (instantiation du scénario)
     movie = Scenario(traffic, ax)
 
     # Affichage du paysage
@@ -77,7 +76,6 @@ def run(working_map:Map):
 
     #ani.save('./video_TIPE.mp4', fps=30)
     plt.show(True)
-
     return ani
 
 if __name__ == '__main__':
