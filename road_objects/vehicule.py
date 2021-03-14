@@ -21,14 +21,15 @@ class Vehicule(RoadItem):
 
 
     @classmethod
-    def List_vehicules(cls):
+    def List(cls):
         """
         Retourne la liste des véhicules
         """
-        return [vehicule for vehicule in cls.Get_Items if isinstance(vehicule, Vehicule)]
+        return (vehicule for vehicule in cls.Get_Items() if isinstance(vehicule, Vehicule))
 
     def __init__(self, axe, path=None, name=None):
         super(Vehicule, self).__init__(axe=axe, path=path, name=name)
+        
         if name is None: self._name = f"Vehicle_{self.id}"
         self._init_time = 0
         self._current_speed = SPEED_START # On démarre avec la vitesse maximale

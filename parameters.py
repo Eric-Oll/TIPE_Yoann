@@ -5,7 +5,7 @@ Ce module regroupe la liste des paramètres de simulation
 import numpy as np
 
 FLAG_REPORT = False      # Indicateur de création d'un report de données
-SHOW_ROADS = False       # Indicateur de visualisation des routes
+SHOW_ROADS = True       # Indicateur de visualisation des routes
 SHOW_FRAME = False        # Affiche des frames dans l'animation
 
 FRAMES_INTERVAL = 20    # Interval de temps entre 2 frames (ms)

@@ -1,16 +1,12 @@
 """
-Project name : TIPE_Yoann
-Module name : road_item.py
+Module name : `road_item.py`
+----------------------------
+*Created on* 14/02/2021 *by* Eric Ollivier
 
-Classes list in this module: 
-- RoadItem
-------------------------------------------------------------------------------------------------------------------------
-Author : Eric Ollivier
-Create date : 14/02/2021
-------------------------------------------------------------------------------------------------------------------------
-Versionning :
-0.1 : Initial version
-0.2 ; Ajout de la notion de franchissable (attribut 'passable')
+*Versionning :*
+
+* 0.1 : Initial version
+* 0.2 ; Ajout de la notion de franchissable (attribut 'passable')
 
 """
 __version__ = 0.2
@@ -25,10 +21,11 @@ from roadmaps.position import NONE_POSITION, Position
 class RoadItem(GraphicalItem):
     """
     Classe de base pour les objets de la route :
-    - Véhicule
-    - obstable (à venir ?)
-    - signalisation (ex : feux tricolores)
-    - ...
+    
+    * Véhicule
+    * signalisation (ex : feux tricolores)
+    * obstable (à venir)
+    * ...
 
     Contribue à calculer le changement de vitesse des véhicules
     """
@@ -78,7 +75,14 @@ class RoadItem(GraphicalItem):
 
     def __init__(self, axe, path=None, roads=None, name=None, **kwargs):
         """
-        Initialiser l'objet RoadItem
+        :param axe: Context graphique (objet matplotlib.Axes)
+        :param path: Itinéraire de l'objet `RoadItem` (objet de type `roadmaps.Path`) 
+        :param roads: Liste des routes si `path` n'est pas défini(objet `list` d'objet `roadmap.Road`)
+        :param name: Nom de l'objet `RoadItem`
+        :param current_time: Valeur initial du temps courant
+        :param init_time: Valeur du temps de début de scénario
+        :param index: Valeur initial de la position dans l'itinéraire
+        :param passable: Valeur initial de propriété de franchissement
         """
         super(RoadItem, self).__init__(axe)
         self._id = self._GetId()
@@ -108,10 +112,12 @@ class RoadItem(GraphicalItem):
 
     @property
     def id(self):
+        """Identifiant de l'objet `RoadItem`"""
         return self._id
 
     @property
     def name(self):
+        """Nom de l'objet `RoadItem`"""
         return self._name
 
     def __eq__(self, other):
@@ -129,13 +135,14 @@ class RoadItem(GraphicalItem):
 
     def __le__(self, other):
         """
-        Test si self a une position avant un autre objget dans le parcours de self.
-        :return:
-            - True : si <other> est sur une position à venir de l'itinéraire de <self>
+        Test si self a une position avant un autre objet dans le parcours de `self`.
+        
+        :returns:
+            - True : si `other` est sur une position à venir de l'itinéraire de `self`
             - False : si
-                -> <other> n'a pas de postion commune avec <self>
-                -> <other> n'a pas démarré
-                -> <self> n'a pas démarré
+                - `other` n'a pas de postion commune avec `self`
+                - `other` n'a pas démarré
+                - `self` n'a pas démarré
         """
         if not other.is_running or not self.is_running:
             return False
@@ -160,10 +167,16 @@ class RoadItem(GraphicalItem):
 
     @property
     def delta_time(self):
+        """
+        Durée entre deux mises à jour de `current_time`
+        """
         return self._delta_time
 
     @property
     def path(self):
+        """
+        Itinéraire de l'objet `RoadItem` (objet de type`Path`)
+        """
         return self._path
 
     @path.setter
@@ -180,9 +193,11 @@ class RoadItem(GraphicalItem):
 
     def set_passable(self, mode=True):
         """
-        Change le statut de franchissement:
-        - True : rend RoadItem franchissable (par défaut)
-        - False : rend RoadItem infranchissable
+        Change le statut de franchissement
+        
+        :param mode:
+            * True : rend RoadItem franchissable (par défaut)
+            * False : rend RoadItem infranchissable
         """
         logging.debug(f"{repr(self)} : Change 'Passable' from {self._passable} to {mode}")
         self._passable = mode
@@ -193,10 +208,14 @@ class RoadItem(GraphicalItem):
 
     @property
     def is_running(self):
+        """
+        Retourne `True` si l'objet `RoadItem` a débuté son chemin et ne l'a pas terminé, `False` sinon
+        """
         return self.is_started and not self.is_ended
 
     @property
     def index(self):
+        """Index de la la position courante dans l'itinéraire."""
         return self._current_position_idx
 
     @index.setter
@@ -205,41 +224,61 @@ class RoadItem(GraphicalItem):
 
     @property
     def is_ended(self):
+        """
+        Retourne `True` si l'objet `RoadItem` a fini son chemin sinon`False` 
+        """
         return self.index >= len(self.path)
 
     @property
     def length(self):
+        """
+        Nombre de `Position` sur l'itinéraire
+        """
         return len(self.path)
 
     @property
     def is_started(self):
+        """
+        Retourne `True` si l'objet `RoadItem` a débuté son chemin sinon `False`
+        """
         return self._current_position_idx>=0
 
     @property
     def position(self):
+        """
+        Position courante de l'objet `RoadItem`
+        Retourne `None` s'il n'est pas sur le chemin (pas actif)
+        """
         if self._current_position_idx>=0 and self._current_position_idx<self.length:
             return self._path[self._current_position_idx]
 
     @property
     def next_position(self):
-        """Retourne la position estimée de la prochaine frame"""
+        """Position estimée de la prochaine frame"""
         return self.position
 
     def add_road(self, *road):
         """
-        Ajoute une route à l'itinairaire
+        Ajoute une ou plusieurs route(s) à l'itinairaire
         """
         for road in roads:
             self._path.add_road(road)
 
     def remain_path(self, end_index=None):
+        """
+        Retourne la portion renatnt à parcourrir pour l'objet `RoadItem`
+        
+        :param end_index: Index correspondant à la borne max
+        :return:
+            * Objet `list` contenant les objets `Position` à venir s'il en reste.
+            * Objet `list` vide s'il n'y a plus rien à parcourrir
+        """
         return self.path[max(0, min(self.index+1, self.length-1)):end_index] if not self.is_ended else []
 
 
     def start(self, init_time):
         """
-        Définit le moment du départ
-        => permet un décalage dans la lecture des positions
+        Définit le moment du départ : permet un décalage dans la lecture des positions
         """
         self._init_time = init_time
         self.current_time = 0
@@ -269,17 +308,18 @@ class RoadItem(GraphicalItem):
         Calcul la distance entre <self> et l'objet <item>
 
         Pré-requis de construction : la distance entre chaque position est constante et vaut parameters.DISTANCE_POSITION
-        distance ::=  (nb positions entre self et position) *
+        distance ::=  (nb positions entre self et position) * DISTANCE_POSITION
+        
+        :math:`distance = \sum_{self}^{position}{nb\ positions}.(parameters.DISTANCE\_POSITION)`
 
-
-        <<< ancien mode de calcul =>
+        *ancien mode de calcul :*
             distance ::= SUM( DISTANCE(postion_i, position_i+1) ), avec position_i in[self.position, item.position [
             La fonction de calcul de distance entre 2 positions est défini par le fonction DISTANCE
-        >>>
+        
 
         :return:
-            - distance(self, item) si <item> a au moins une position commune avec <self>
-            - None si pas de position commune
+            - distance(`self`, `other`) si `other` a au moins une position commune avec `self`
+            - `None` si pas de position commune
         """
         if position in self.remain_path(self.index+self._MAX_POSITION_FORWARD):
             return (self.path.index(position) - self.index)* DISTANCE_POSITION

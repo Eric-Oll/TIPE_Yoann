@@ -27,7 +27,8 @@ logging.basicConfig(level=logging.INFO,
 def run(working_map:Map):
     """
     La fonction 'run' lance l'animation sur la Map passé en paramètre
-    :parameters map: Classe Map correspondant à la carte sur laquelle faire l'animation
+    
+    :parameters working_map: Classe `Map` correspondant à la carte sur laquelle faire l'animation
     """
     # Création du contexte graphique
     fig, ax = plt.subplots()
@@ -60,7 +61,7 @@ def run(working_map:Map):
         vehicule.speed = [1,2,3,4][rd.randint(0,3)]
 
     # Création du film (instantiation du scénario)
-    movie = Scenario(traffic, ax)
+    movie = Scenario(ax)
 
     # Affichage du paysage
     simulation_map.landscape()
