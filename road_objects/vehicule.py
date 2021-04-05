@@ -1,10 +1,13 @@
 """
-Ce module contient la définition de la classe Vehicule
+Module name : `road_item.py`
+----------------------------
+*Created on* 13/02/2021 *by* Eric Ollivier
 
-______________________________________________________________________________________________________________
-Versions :
-0.1 :
-- Vehicule.index : cast la valeur en 'int'
+*Versionning :*
+
+* 0.1 : Initial version
+
+> Vehicule.index : cast la valeur en 'int'
 """
 import logging
 
@@ -15,10 +18,9 @@ from parameters import MAX_SPEED, MAX_SPEED_UP, MAX_SPEED_DOWN, MIN_DISTANCE, SP
 
 class Vehicule(RoadItem):
     """
-    Regroupe les routes  de son itinairaire
-    et définit la position du véhicule dans le temps
+    Représente un objet roulant (itinéraire, postion et vitesse).
+    Regroupe les routes de son itinairair et définit la position du véhicule dans le temps
     """
-
 
     @classmethod
     def List(cls):
@@ -28,6 +30,14 @@ class Vehicule(RoadItem):
         return (vehicule for vehicule in cls.Get_Items() if isinstance(vehicule, Vehicule))
 
     def __init__(self, axe, path=None, name=None):
+        """
+        :param axe: contexte graphique
+        :type axe: matplotlib.Axes
+        :param path: Itinéraire du véhicule (par défaut None)
+        :type path: list<Position>
+        :param name: Nom du véhicule. Par défaut "Vehicle_<identifiant auto>"
+        :type name: str
+        """
         super(Vehicule, self).__init__(axe=axe, path=path, name=name)
         
         if name is None: self._name = f"Vehicle_{self.id}"
@@ -35,6 +45,7 @@ class Vehicule(RoadItem):
         self._current_speed = SPEED_START # On démarre avec la vitesse maximale
 
     def __repr__(self):
+        "Représentation textuel du véhicule"
         return f"<Vehicule {self.name} : position={self.position}(index={self.index}), speed={self.speed}, length={self.length}>"
 
     @property
@@ -43,6 +54,7 @@ class Vehicule(RoadItem):
 
     @property
     def speed(self):
+        "Vitesse du véhicule"
         return self._current_speed
 
     @speed.setter
@@ -53,10 +65,20 @@ class Vehicule(RoadItem):
 
     @property
     def category(self):
+        """
+        Catégorie du véhicule. Permet de définir la couleur du véhicule au niveau de l'affichage.
+        
+        La couleur change en fonction de la vitesse.
+        """
         return int(self.speed)
 
     @property
     def next_position(self):
+        """
+        Retourne la position suviante estimée du véhicule (t+1 sans changement de vitesse)
+        
+        :rtype: Position 
+        """
         return self.path[
             max(0,
                 min(
@@ -66,7 +88,13 @@ class Vehicule(RoadItem):
                 )
             ]
 
-    def forward(self, new_time):
+    def forward(self, new_time:int):
+        """
+        Cette méthode calcule les nouvelles coordonnées du véhicule pour le temps `new_time`.
+        
+        :param new_time: Temps absolu dans le scénario.
+        :type new_time: int
+        """
         # logging.debug(repr(self)+f".forward : ended={self.is_ended}")
         if not self.is_ended:
             # logging.debug(f"... new time = {new_time}")
@@ -78,7 +106,9 @@ class Vehicule(RoadItem):
     def update_speed(self, distance:float=None)->None:
         """
         Calcul et met à jour la vitesse en fonction de la distance de l'objet routier suivant
+        
         :param distance: distance entre <self> et l'objet suivant
+        :type distance: float
         """
         if not self.is_running : return
         if distance:
@@ -98,9 +128,18 @@ class Vehicule(RoadItem):
                          )
             logging.debug(f"{repr(self)} : new speed without distance")
 
-    def get_plot(self, new_time=None):
+    def get_plot(self, new_time:int=None)->list:
         """
         Retourne les éléménts graphique à afficher
+        
+        :param new_time: Temps absolu dans le scénario. 
+        :type new_time: int ou None
+        
+        * Si valeur entière, on fait avancer le véhicule. 
+        * Si `None`, le véhicule ne bouge pas. (valeur par défaut).
+        
+        :return: Liste des composant grapgique pour le raffraichissement de l'image
+        :rtype: list<matplotlib.artist.Artist>
         """
         if new_time is not None:
             self.forward(new_time)

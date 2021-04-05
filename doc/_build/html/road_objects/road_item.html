@@ -1,0 +1,426 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Module road_item &#8212; documentation TIPE 1</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Package roadmaps" href="../roadmaps/package.html" />
+    <link rel="prev" title="Module graphical_item" href="graphical_item.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-road_objects.road_item">
+<span id="module-road-item"></span><h1>Module road_item<a class="headerlink" href="#module-road_objects.road_item" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="module-name-road-item-py">
+<h2>Module name : <cite>road_item.py</cite><a class="headerlink" href="#module-name-road-item-py" title="Lien permanent vers ce titre">¶</a></h2>
+<p><em>Created on</em> 14/02/2021 <em>by</em> Eric Ollivier</p>
+<p><em>Versionning :</em></p>
+<ul class="simple">
+<li>0.1 : Initial version</li>
+<li>0.2 ; Ajout de la notion de franchissable (attribut “passable”)</li>
+</ul>
+<dl class="class">
+<dt id="road_objects.road_item.RoadItem">
+<em class="property">class </em><code class="descclassname">road_objects.road_item.</code><code class="descname">RoadItem</code><span class="sig-paren">(</span><em>axe</em>, <em>path=None</em>, <em>roads=None</em>, <em>name=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe de base pour les objets de la route :</p>
+<ul class="simple">
+<li>Véhicule</li>
+<li>signalisation (ex : feux tricolores)</li>
+<li>obstable (à venir)</li>
+<li>…</li>
+</ul>
+<p>Contribue à calculer le changement de vitesse des véhicules</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><ul class="first last simple">
+<li><strong>axe</strong> – Context graphique (objet matplotlib.Axes)</li>
+<li><strong>path</strong> – Itinéraire de l’objet <cite>RoadItem</cite> (objet de type <cite>roadmaps.Path</cite>)</li>
+<li><strong>roads</strong> – Liste des routes si <cite>path</cite> n’est pas défini(objet <cite>list</cite> d’objet <cite>roadmap.Road</cite>)</li>
+<li><strong>name</strong> – Nom de l’objet <cite>RoadItem</cite></li>
+<li><strong>current_time</strong> – Valeur initial du temps courant</li>
+<li><strong>init_time</strong> – Valeur du temps de début de scénario</li>
+<li><strong>index</strong> – Valeur initial de la position dans l’itinéraire</li>
+<li><strong>passable</strong> – Valeur initial de propriété de franchissement</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="road_objects.road_item.RoadItem.Add_item">
+<em class="property">classmethod </em><code class="descname">Add_item</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.Add_item" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ajoute un objet à l’inventaire des items de la route</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="road_objects.road_item.RoadItem.Get_Items">
+<em class="property">classmethod </em><code class="descname">Get_Items</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.Get_Items" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne la liste des items</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.__eq__">
+<code class="descname">__eq__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.__eq__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit l’égalité pour la comparaison entre les objets</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.__getitem__">
+<code class="descname">__getitem__</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.__getitem__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne le composant graphique correspondant au nom <cite>name</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.__le__">
+<code class="descname">__le__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.__le__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Test si self a une position avant un autre objet dans le parcours de <cite>self</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Retourne:</th><td class="field-body"><ul class="simple">
+<li>True : si <cite>other</cite> est sur une position à venir de l’itinéraire de <cite>self</cite></li>
+<li><dl class="first docutils">
+<dt>False <span class="classifier-delimiter">:</span> <span class="classifier">si</span></dt>
+<dd><ul class="first last">
+<li><cite>other</cite> n’a pas de postion commune avec <cite>self</cite></li>
+<li><cite>other</cite> n’a pas démarré</li>
+<li><cite>self</cite> n’a pas démarré</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.add_component">
+<code class="descname">add_component</code><span class="sig-paren">(</span><em>name: str</em>, <em>component</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.add_component" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ajout un élement graphique de base pour la représentation de l’Item</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> – Nom du composant</li>
+<li><strong>component</strong> – Composant à ajouter de type matplotlib.Artist</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.add_plot">
+<code class="descname">add_plot</code><span class="sig-paren">(</span><em>*args</em>, <em>name: str</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.add_plot" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée un objet grapghique avec la méthode <cite>Axes.plot</cite> et l’ajoute  à la liste des composants graphiques</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> – Nom à donner au nouveau composant</li>
+<li><strong>args</strong> – Liste des paramètre pour la méthode <cite>Axes.plot</cite></li>
+<li><strong>kwargs</strong> – Liste des paramètres nommés pour la méthode <cite>Axes.plot</cite></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.add_road">
+<code class="descname">add_road</code><span class="sig-paren">(</span><em>*road</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.add_road" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ajoute une ou plusieurs route(s) à l’itinairaire</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.ax">
+<code class="descname">ax</code><a class="headerlink" href="#road_objects.road_item.RoadItem.ax" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Contexte graphique (objet de type <cite>matplotlib.Axes</cite>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.current_time">
+<code class="descname">current_time</code><a class="headerlink" href="#road_objects.road_item.RoadItem.current_time" title="Lien permanent vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.delta_time">
+<code class="descname">delta_time</code><a class="headerlink" href="#road_objects.road_item.RoadItem.delta_time" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Durée entre deux mises à jour de <cite>current_time</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.distance">
+<code class="descname">distance</code><span class="sig-paren">(</span><em>position: roadmaps.position.Position</em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#road_objects.road_item.RoadItem.distance" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Calcul la distance entre &lt;self&gt; et l’objet &lt;item&gt;</p>
+<p>Pré-requis de construction : la distance entre chaque position est constante et vaut parameters.DISTANCE_POSITION
+distance ::=  (nb positions entre self et position) * DISTANCE_POSITION</p>
+<p><img class="math" src="../_images/math/585cda4c81866b3ab068a6007ca70c3c3e0241ed.png" alt="distance = \sum_{self}^{position}{nb\ positions}.(parameters.DISTANCE\_POSITION)"/></p>
+<dl class="docutils">
+<dt><em>ancien mode de calcul :</em></dt>
+<dd>distance ::= SUM( DISTANCE(postion_i, position_i+1) ), avec position_i in[self.position, item.position [
+La fonction de calcul de distance entre 2 positions est défini par le fonction DISTANCE</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Retourne:</th><td class="field-body"><ul class="simple">
+<li>distance(<cite>self</cite>, <cite>other</cite>) si <cite>other</cite> a au moins une position commune avec <cite>self</cite></li>
+<li><cite>None</cite> si pas de position commune</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>new_time</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.forward" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Methode par pdéfaut pour faire avancer un objet dans le temps</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.get_components">
+<code class="descname">get_components</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; list<a class="headerlink" href="#road_objects.road_item.RoadItem.get_components" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fournit la liste de composants graphique</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Retourne:</th><td class="field-body">objet <cite>list</cite> d’objets de type matplotlib.Artist</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.get_plot">
+<code class="descname">get_plot</code><span class="sig-paren">(</span><em>new_time=None</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.get_plot" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne les éléménts graphique à afficher</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.get_position">
+<code class="descname">get_position</code><span class="sig-paren">(</span><em>new_time</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.get_position" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne la position (x,y) du Vehicule</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.id">
+<code class="descname">id</code><a class="headerlink" href="#road_objects.road_item.RoadItem.id" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Identifiant de l’objet <cite>RoadItem</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.index">
+<code class="descname">index</code><a class="headerlink" href="#road_objects.road_item.RoadItem.index" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Index de la la position courante dans l’itinéraire.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.init_graphic">
+<code class="descname">init_graphic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.init_graphic" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Initialise la représentation graphique</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.is_ended">
+<code class="descname">is_ended</code><a class="headerlink" href="#road_objects.road_item.RoadItem.is_ended" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne <cite>True</cite> si l’objet <cite>RoadItem</cite> a fini son chemin sinon`False`</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.is_running">
+<code class="descname">is_running</code><a class="headerlink" href="#road_objects.road_item.RoadItem.is_running" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne <cite>True</cite> si l’objet <cite>RoadItem</cite> a débuté son chemin et ne l’a pas terminé, <cite>False</cite> sinon</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.is_started">
+<code class="descname">is_started</code><a class="headerlink" href="#road_objects.road_item.RoadItem.is_started" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne <cite>True</cite> si l’objet <cite>RoadItem</cite> a débuté son chemin sinon <cite>False</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.length">
+<code class="descname">length</code><a class="headerlink" href="#road_objects.road_item.RoadItem.length" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Nombre de <cite>Position</cite> sur l’itinéraire</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.name">
+<code class="descname">name</code><a class="headerlink" href="#road_objects.road_item.RoadItem.name" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Nom de l’objet <cite>RoadItem</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.next_position">
+<code class="descname">next_position</code><a class="headerlink" href="#road_objects.road_item.RoadItem.next_position" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Position estimée de la prochaine frame</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.passable">
+<code class="descname">passable</code><a class="headerlink" href="#road_objects.road_item.RoadItem.passable" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retour le statut de franchissement</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.path">
+<code class="descname">path</code><a class="headerlink" href="#road_objects.road_item.RoadItem.path" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Itinéraire de l’objet <cite>RoadItem</cite> (objet de type`Path`)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="road_objects.road_item.RoadItem.position">
+<code class="descname">position</code><a class="headerlink" href="#road_objects.road_item.RoadItem.position" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Position courante de l’objet <cite>RoadItem</cite>
+Retourne <cite>None</cite> s’il n’est pas sur le chemin (pas actif)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.remain_path">
+<code class="descname">remain_path</code><span class="sig-paren">(</span><em>end_index=None</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.remain_path" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne la portion renatnt à parcourrir pour l’objet <cite>RoadItem</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>end_index</strong> – Index correspondant à la borne max</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Retourne:</th><td class="field-body"><ul class="simple">
+<li>Objet <cite>list</cite> contenant les objets <cite>Position</cite> à venir s’il en reste.</li>
+<li>Objet <cite>list</cite> vide s’il n’y a plus rien à parcourrir</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.set_impassable">
+<code class="descname">set_impassable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.set_impassable" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Rend RoadItem infranchissable</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.set_passable">
+<code class="descname">set_passable</code><span class="sig-paren">(</span><em>mode=True</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.set_passable" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Change le statut de franchissement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>mode</strong> – <ul class="simple">
+<li>True : rend RoadItem franchissable (par défaut)</li>
+<li>False : rend RoadItem infranchissable</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="road_objects.road_item.RoadItem.start">
+<code class="descname">start</code><span class="sig-paren">(</span><em>init_time</em><span class="sig-paren">)</span><a class="headerlink" href="#road_objects.road_item.RoadItem.start" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit le moment du départ : permet un décalage dans la lecture des positions</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="package.html">Package <cite>road_objects</cite></a><ul>
+      <li>Previous: <a href="graphical_item.html" title="Chapitre précédent">Module graphical_item</a></li>
+      <li>Next: <a href="../roadmaps/package.html" title="Chapitre suivant">Package <cite>roadmaps</cite></a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Yoann Ollivier, Mathieu Martial, Etienne Marchand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/road_objects/road_item.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

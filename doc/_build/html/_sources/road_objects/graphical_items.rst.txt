@@ -1,0 +1,7 @@
+
+Module graphical_item
+----------------------
+
+.. automodule:: road_objects.graphical_item
+   :members:
+

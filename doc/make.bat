@@ -10,6 +10,7 @@ if "%SPHINXBUILD%" == "" (
 set SOURCEDIR=.
 set BUILDDIR=_build
 set SPHINXPROJ=TIPE
+SET GRAPHIZ_DOT=D:\\app\\Graphviz\\bin\\dot.exe
 
 if "%1" == "" goto help
 
@@ -26,7 +27,7 @@ if errorlevel 9009 (
 	exit /b 1
 )
 
-%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
+%SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% -D graphviz_dot=%GRAPHIZ_DOT% 
 goto end
 
 :help

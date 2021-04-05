@@ -1,19 +1,20 @@
 """
-Project name : TIPE_Yoann
-Module name : map.py
+Module name : `map.py`
+----------------------------
+*Created on* 20/02/2021 *by* Eric Ollivier
 
-Classes list in this module: 
-- Map : Classe de base pour les cartes
-------------------------------------------------------------------------------------------------------------------------
-Author : Eric Ollivier
-Create date : 20/02/2021
-------------------------------------------------------------------------------------------------------------------------
-Versionning :
-0.1 : Initial version
+*Versionning :*
+
+* 0.1 : Initial version
 """
 
 
 class Map():
+    """
+    Interface pour la création des cartes.
+
+    *Cette classe ne peut pas être instanciée directement. Il est nécessaire de la dériver.*
+    """
     def __init__(self, axe):
         self._ax = axe
         self._roadmap = None
@@ -21,16 +22,21 @@ class Map():
 
     def landscape(self):
         """
-        Fond de carte
+        Signature de la méthode de création du fond de carte
+        
+        **Méthode à implémenter dans la classe fille.**
         """
         raise NotImplemented
 
     @property
-    def road_items(self):
+    def road_items(self)->list:
+        """
+        Liste des objets de la route.
+        """
         return self._roaditems
 
     @property
-    def roadmap(self):
+    def roadmap(self)->list:
         """
         Liste des itinéraires
         """
@@ -38,20 +44,28 @@ class Map():
 
     @property
     def ax(self):
+        """
+        Contexte graphique 
+        :return: objet matplotlib.Axes
+        """
         return self._ax
 
     @property
-    def xmin(self):
+    def xmin(self)->float:
+        "Borne inférieure pour l'axe des abscisses"
         return self.ax.get_xlim()[0]
 
     @property
-    def xmax(self):
+    def xmax(self)->float:
+        "Borne supérieure pour l'axe des abscisses"
         return self.ax.get_xlim()[1]
 
     @property
-    def ymin(self):
+    def ymin(self)->float:
+        "Borne inférieure pour l'axe des ordonnées"
         return self.ax.get_ylim()[0]
 
     @property
-    def ymax(self):
+    def ymax(self)->float:
+        "Borne supérieure pour l'axe des ordonnées"
         return self.ax.get_ylim()[1]

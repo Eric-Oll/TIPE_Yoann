@@ -1,9 +1,16 @@
 """
-Ce module contient les routes permettant au véhicule de se déplacer
-- Class road
-- variable roadmap
+Module name : `road.py`
+----------------------------
+*Created on* 14/02/2021 *by* Eric Ollivier
 
+Ce module contient les routes permettant au véhicule de se déplacer
+*  Class road
+
+*Versionning :*
+
+* 0.1 : Initial version
 """
+__version__ = "0.1"
 import numpy as np
 from parameters import DISTANCE, DISTANCE_POSITION
 from roadmaps.position import Position

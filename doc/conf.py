@@ -34,7 +34,12 @@ sys.path.insert(0, os.path.abspath('..'))
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.napoleon',
               'sphinx.ext.imgmath',
+              'sphinx.ext.graphviz',
+              'sphinx.ext.inheritance_diagram',
+              # 'sphinx.ext.todo',
               ]
+
+graphviz_output_format = 'svg'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -50,7 +55,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'TIPE'
-copyright = '2021, Yoann Ollivier, Mathieu Martial, Etienne Marchand, Eric Ollivier'
+copyright = '2021, Yoann Ollivier, Mathieu Martial, Etienne Marchand'
 author = 'Yoann Ollivier, Mathieu Martial, Etienne Marchand'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -78,7 +83,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = False
+todo_include_todos = True
 
 
 # -- Options for HTML output ----------------------------------------------
