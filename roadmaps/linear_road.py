@@ -1,16 +1,16 @@
 """
-Project name : TIPE_Yoann
-Module name : linear_road.py
+Module name : `linear_road.py`
+------------------------------
+*Created on* 21/02/2021 *by* Eric Ollivier
 
-Classes list in this module: 
-- LinearRoad
-------------------------------------------------------------------------------------------------------------------------
-Author : Eric Ollivier
-Create date : 21/02/2021
-------------------------------------------------------------------------------------------------------------------------
-Versionning :
-0.1 : Initial version
-0.2 : Simplification de la fonction 'landscape'
+*Classes list in this module:* 
+
+* `LinearRoad`
+
+*Versionning :*
+
+* 0.1 : Initial version
+* 0.2 : Simplification de la fonction 'landscape'
 """
 __version__ = 0.2
 
@@ -27,12 +27,20 @@ class LinearRoad(Map):
         self.init_road()
 
     def init_graphic(self):
+        """
+        Définit les paramètre graphique.
+        - Taille du contexte grapghique
+        - Borne des valeurs graphiques
+        """
         self._ax.get_figure().set_size_inches(20,6)
         self._ax.set_xlim(0, 40)
         self._ax.set_ylim(-2, 2)
         self._artists = None
 
     def init_road(self):
+        """
+        Crée l'objets de la route et définit l'itinéraire.
+        """
         x_min, x_max = self._ax.get_xlim()
         self._roadmap = [
             Path(Road(
@@ -44,6 +52,12 @@ class LinearRoad(Map):
         ]
 
     def landscape(self):
+        """
+        Crée le fond de carte
+        
+        :return: liste des éléments composants le fond de carte.
+        :rtype: objet `list` d'objets `matplotlib.Artist`
+        """
         x_min, x_max = self._ax.get_xlim()
         artists = []
         artists.extend(self._ax.plot([x_min, x_max], [1, 1], 'b'))

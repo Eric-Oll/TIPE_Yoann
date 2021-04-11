@@ -1,0 +1,229 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Module path &#8212; documentation TIPE 1</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Module linear_road" href="linear_road.html" />
+    <link rel="prev" title="Module road" href="road.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-roadmaps.path">
+<span id="module-path"></span><h1>Module path<a class="headerlink" href="#module-roadmaps.path" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="module-name-path-py">
+<h2>Module name : <cite>path.py</cite><a class="headerlink" href="#module-name-path-py" title="Lien permanent vers ce titre">¶</a></h2>
+<p><em>Created on</em> 14/02/2021 <em>by</em> Eric Ollivier</p>
+<p><em>Versionning :</em></p>
+<ul class="simple">
+<li>0.1 : Initial version</li>
+<li>0.2 : Ajout de la méthode “append_position” permettant d’ajouter une position à un chemin</li>
+</ul>
+<dl class="class">
+<dt id="roadmaps.path.Path">
+<em class="property">class </em><code class="descclassname">roadmaps.path.</code><code class="descname">Path</code><span class="sig-paren">(</span><em>*roads</em><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.path.Path" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>roads</strong> – liste des routes (objet <cite>roadmaps.Road</cite>)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note :</em></p>
+<p>Pour rappel, l’astérisque devant «&nbsp;roads&nbsp;» indique que la fonction peut prendre un nombre indéterminé de
+paramètres qui sont ensuite stockés dans une liste que l’on nomme «&nbsp;roads&nbsp;».</p>
+<dl class="method">
+<dt id="roadmaps.path.Path.__contains__">
+<code class="descname">__contains__</code><span class="sig-paren">(</span><em>item: roadmaps.position.Position</em><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.path.Path.__contains__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Teste si une position fait partie de l’itinéraire</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>item</strong> – objet <cite>Position</cite> à tester</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Retourne:</th><td class="field-body">Résultat du test d’appartenance :</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>True</cite> si <cite>item</cite> fait partie du chemin (<cite>self._path</cite>)</li>
+<li><cite>False</cite> sinon.</li>
+</ul>
+<p><em>Usage :</em>  &lt;objet de type Position&gt; <strong>in</strong> &lt;objet de type Path&gt;</p>
+<p><em>Exemple :</em></p>
+<dl class="docutils">
+<dt><cite>if objet_position in objet_path:</cite></dt>
+<dd><cite>&lt;condition vraie&gt;</cite></dd>
+<dt><cite>else:</cite></dt>
+<dd><cite>&lt;condition fausse&gt;</cite></dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="roadmaps.path.Path.__getitem__">
+<code class="descname">__getitem__</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span> &#x2192; roadmaps.position.Position<a class="headerlink" href="#roadmaps.path.Path.__getitem__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne la position correspondant à l’index</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>index</strong> (type <cite>int</cite> ou <cite>slice</cite>) – index de la position à retourner</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Retourne:</th><td class="field-body">un objet ou une liste d’objets <cite>Position</cite> correspondant à l’index</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Type retourné:</th><td class="field-body"><ul class="simple">
+<li><cite>Position</cite> si un seul objet correspont à l’index,</li>
+<li><cite>list</cite> (d’objets ) si plusieurs objets ocrrespond à <cite>index</cite></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Lève:</th><td class="field-body"><strong>IndexError</strong> – si <cite>ìndex</cite> est en dehors des bornes de la liste <cite>self._path</cite></td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt><em>Exemple :</em></dt>
+<dd><ul class="first last simple">
+<li>si chemin = Path(…)</li>
+<li><cite>chemin[i]</cite> retourne  l’objet <cite>Position</cite>  qui se trouve à la position <cite>i+1</cite> (index <cite>i</cite>) dans <cite>chemin</cite></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="roadmaps.path.Path.__len__">
+<code class="descname">__len__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.path.Path.__len__" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne le nombre de positions du chemin</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="roadmaps.path.Path.add_road">
+<code class="descname">add_road</code><span class="sig-paren">(</span><em>road: roadmaps.road.Road</em><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.path.Path.add_road" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ajoute une route à l’itinéraire</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>road</strong> – route (objet <cite>roadmaps.road.Road</cite>) à ajouter.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="roadmaps.path.Path.append_position">
+<code class="descname">append_position</code><span class="sig-paren">(</span><em>position: roadmaps.position.Position</em><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.path.Path.append_position" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Ajoute une position à la fin du chemin</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>positon</strong> – position à ajouter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="roadmaps.path.Path.index">
+<code class="descname">index</code><span class="sig-paren">(</span><em>position: roadmaps.position.Position</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#roadmaps.path.Path.index" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne l’index d’une position dans le chemin</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>position</strong> – position à rechercher dans le chemin</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Retourne:</th><td class="field-body">index de l’objet position</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="package.html">Package <cite>roadmaps</cite></a><ul>
+      <li>Previous: <a href="road.html" title="Chapitre précédent">Module road</a></li>
+      <li>Next: <a href="linear_road.html" title="Chapitre suivant">Module linear_road</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Yoann Ollivier, Mathieu Martial, Etienne Marchand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/roadmaps/path.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
