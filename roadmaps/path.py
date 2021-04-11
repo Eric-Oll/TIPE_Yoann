@@ -74,6 +74,7 @@ class Path():
         
         :param item: objet `Position` à tester
         :return: Résultat du test d'appartenance :
+        
         * `True` si `item` fait partie du chemin (`self._path`)
         * `False` sinon.
         

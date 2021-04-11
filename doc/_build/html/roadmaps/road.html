@@ -1,0 +1,136 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Module road &#8212; documentation TIPE 1</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Module path" href="path.html" />
+    <link rel="prev" title="Module positon" href="position.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-roadmaps.road">
+<span id="module-road"></span><h1>Module road<a class="headerlink" href="#module-roadmaps.road" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="module-name-road-py">
+<h2>Module name : <cite>road.py</cite><a class="headerlink" href="#module-name-road-py" title="Lien permanent vers ce titre">¶</a></h2>
+<p><em>Created on</em> 14/02/2021 <em>by</em> Eric Ollivier</p>
+<p>Ce module contient les routes permettant au véhicule de se déplacer
+*  Class road</p>
+<p><em>Versionning :</em></p>
+<ul class="simple">
+<li>0.1 : Initial version</li>
+</ul>
+<dl class="class">
+<dt id="roadmaps.road.Road">
+<em class="property">class </em><code class="descclassname">roadmaps.road.</code><code class="descname">Road</code><span class="sig-paren">(</span><em>x_interval</em>, <em>y_interval</em>, <em>path_functions</em>, <em>step: int = None</em><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.road.Road" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit la fonction de calcul de la trajectoire entre deux positions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x_interval</strong> – Intervalle de calcul (x_start, x_end)</li>
+<li><strong>y_interval</strong> – Intervalle de calcul (y_start, y_end)</li>
+<li><strong>path_functions</strong> – Fonctions paramétriques (x_func, y_func)
+de calcul de la trajectoire entre les deux positions</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="roadmaps.road.Road.init_step">
+<code class="descname">init_step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.road.Road.init_step" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Calcul le nombre de pas pour avoir une distance de DISTANCE_POSTION</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="roadmaps.road.Road.setup_path">
+<code class="descname">setup_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.road.Road.setup_path" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Calcule les coordonnées de la route</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="package.html">Package <cite>roadmaps</cite></a><ul>
+      <li>Previous: <a href="position.html" title="Chapitre précédent">Module positon</a></li>
+      <li>Next: <a href="path.html" title="Chapitre suivant">Module path</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Yoann Ollivier, Mathieu Martial, Etienne Marchand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/roadmaps/road.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

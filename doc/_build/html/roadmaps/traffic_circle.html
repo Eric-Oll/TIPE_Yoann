@@ -1,0 +1,177 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Module traffic_circle &#8212; documentation TIPE 1</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="prev" title="Module linear_road_with_traffic_light" href="linear_road_with_traffic_light.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-traffic-circle">
+<h1>Module traffic_circle<a class="headerlink" href="#module-traffic-circle" title="Lien permanent vers ce titre">¶</a></h1>
+<object data="../_images/inheritance-fb525f078600f3390ac94a525ee0ec5db163e4cf.svg" type="image/svg+xml">
+            <p class="warning">Inheritance diagram of roadmaps.traffic_circle.TrafficCircle</p></object>
+<span class="target" id="module-roadmaps.traffic_circle"></span><p>Carte d’un rond-point</p>
+<dl class="class">
+<dt id="roadmaps.traffic_circle.TrafficCircle">
+<em class="property">class </em><code class="descclassname">roadmaps.traffic_circle.</code><code class="descname">TrafficCircle</code><span class="sig-paren">(</span><em>axe</em><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="roadmaps.traffic_circle.TrafficCircle.RAYON_EXTERIEUR">
+<code class="descname">RAYON_EXTERIEUR</code><em class="property"> = 20</em><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle.RAYON_EXTERIEUR" title="Lien permanent vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.traffic_circle.TrafficCircle.RAYON_INTERIEUR">
+<code class="descname">RAYON_INTERIEUR</code><em class="property"> = 15</em><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle.RAYON_INTERIEUR" title="Lien permanent vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.traffic_circle.TrafficCircle.ax">
+<code class="descname">ax</code><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle.ax" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Contexte graphique
+:return: objet matplotlib.Axes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="roadmaps.traffic_circle.TrafficCircle.init_graphic">
+<code class="descname">init_graphic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle.init_graphic" title="Lien permanent vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="roadmaps.traffic_circle.TrafficCircle.init_roads">
+<code class="descname">init_roads</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle.init_roads" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Construction des routes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="roadmaps.traffic_circle.TrafficCircle.landscape">
+<code class="descname">landscape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle.landscape" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>r1 : rayon du rond point interieur
+r2 : rayon du rond point extérieur
+r : constante pour tronquer le rond point extérieur</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.traffic_circle.TrafficCircle.r">
+<code class="descname">r</code><em class="property"> = 19.84313483298443</em><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle.r" title="Lien permanent vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.traffic_circle.TrafficCircle.road_items">
+<code class="descname">road_items</code><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle.road_items" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Liste des objets de la route.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.traffic_circle.TrafficCircle.roadmap">
+<code class="descname">roadmap</code><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle.roadmap" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Liste des itinéraires</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.traffic_circle.TrafficCircle.xmax">
+<code class="descname">xmax</code><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle.xmax" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Borne supérieure pour l’axe des abscisses</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.traffic_circle.TrafficCircle.xmin">
+<code class="descname">xmin</code><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle.xmin" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Borne inférieure pour l’axe des abscisses</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.traffic_circle.TrafficCircle.ymax">
+<code class="descname">ymax</code><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle.ymax" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Borne supérieure pour l’axe des ordonnées</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.traffic_circle.TrafficCircle.ymin">
+<code class="descname">ymin</code><a class="headerlink" href="#roadmaps.traffic_circle.TrafficCircle.ymin" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Borne inférieure pour l’axe des ordonnées</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="package.html">Package <cite>roadmaps</cite></a><ul>
+      <li>Previous: <a href="linear_road_with_traffic_light.html" title="Chapitre précédent">Module linear_road_with_traffic_light</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Yoann Ollivier, Mathieu Martial, Etienne Marchand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/roadmaps/traffic_circle.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

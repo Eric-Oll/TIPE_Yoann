@@ -1,0 +1,186 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Module linear_road_with_traffic_light &#8212; documentation TIPE 1</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Module traffic_circle" href="traffic_circle.html" />
+    <link rel="prev" title="Module linear_road" href="linear_road.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-linear-road-with-traffic-light">
+<h1>Module linear_road_with_traffic_light<a class="headerlink" href="#module-linear-road-with-traffic-light" title="Lien permanent vers ce titre">¶</a></h1>
+<object data="../_images/inheritance-60a4d585ec3db4d99688a34ef6af14ced935fc70.svg" type="image/svg+xml">
+            <p class="warning">Inheritance diagram of roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight</p></object>
+<span class="target" id="module-roadmaps.linear_road_with_traffic_light"></span><div class="section" id="module-name-linear-road-with-traffic-light-py">
+<h2>Module name : <cite>linear_road_with_traffic_light.py</cite><a class="headerlink" href="#module-name-linear-road-with-traffic-light-py" title="Lien permanent vers ce titre">¶</a></h2>
+<p><em>Created on</em> 28/02/2021 <em>by</em> Eric Ollivier</p>
+<p><em>Classes list in this module:</em></p>
+<ul class="simple">
+<li>linear_road_with_traffic_light</li>
+</ul>
+<p><em>Versionning :</em></p>
+<ul class="simple">
+<li>0.1 : Initial version</li>
+</ul>
+<dl class="class">
+<dt id="roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight">
+<em class="property">class </em><code class="descclassname">roadmaps.linear_road_with_traffic_light.</code><code class="descname">LinearRoadWithTrafficLight</code><span class="sig-paren">(</span><em>axe</em><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.ax">
+<code class="descname">ax</code><a class="headerlink" href="#roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.ax" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Contexte graphique
+:return: objet matplotlib.Axes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.init_graphic">
+<code class="descname">init_graphic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.init_graphic" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Définit les paramètre graphique.
+- Taille du contexte grapghique
+- Borne des valeurs graphiques</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.init_road">
+<code class="descname">init_road</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.init_road" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée l’objets de la route et définit l’itinéraire.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.landscape">
+<code class="descname">landscape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.landscape" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Crée le fond de carte</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Retourne:</th><td class="field-body">liste des éléments composants le fond de carte.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Type retourné:</th><td class="field-body">objet <cite>list</cite> d’objets <cite>matplotlib.Artist</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.road_items">
+<code class="descname">road_items</code><a class="headerlink" href="#roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.road_items" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Liste des objets de la route.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.roadmap">
+<code class="descname">roadmap</code><a class="headerlink" href="#roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.roadmap" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Liste des itinéraires</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.xmax">
+<code class="descname">xmax</code><a class="headerlink" href="#roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.xmax" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Borne supérieure pour l’axe des abscisses</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.xmin">
+<code class="descname">xmin</code><a class="headerlink" href="#roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.xmin" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Borne inférieure pour l’axe des abscisses</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.ymax">
+<code class="descname">ymax</code><a class="headerlink" href="#roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.ymax" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Borne supérieure pour l’axe des ordonnées</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.ymin">
+<code class="descname">ymin</code><a class="headerlink" href="#roadmaps.linear_road_with_traffic_light.LinearRoadWithTrafficLight.ymin" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Borne inférieure pour l’axe des ordonnées</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="package.html">Package <cite>roadmaps</cite></a><ul>
+      <li>Previous: <a href="linear_road.html" title="Chapitre précédent">Module linear_road</a></li>
+      <li>Next: <a href="traffic_circle.html" title="Chapitre suivant">Module traffic_circle</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Yoann Ollivier, Mathieu Martial, Etienne Marchand.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/roadmaps/linear_road_with_traffic_light.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
